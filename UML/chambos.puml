@@ -1,0 +1,396 @@
+@startuml chambos_version_2
+left to right direction
+
+skinparam linetype ortho
+
+package "SearchCriteria" {
+    interface ISearchCriteria<T> {
+        +matches(item: T): boolean
+    }
+
+    class TitleSearchCriteria implements ISearchCriteria {
+        +String title
+        +matches(book: Book): boolean
+    }
+
+    class AuthorSearchCriteria implements ISearchCriteria {
+        +String author
+        +matches(book: Book): boolean
+    }
+
+    class ISBNSearchCriteria implements ISearchCriteria {
+        +String ISBN
+        +matches(book: Book): boolean
+    }
+
+    class NameSearchCriteria implements ISearchCriteria {
+        +String name
+        +matches(patron: Patron): boolean
+    }
+
+    class MembershipNumberSearchCriteria implements ISearchCriteria {
+        +int membershipNumber
+        +matches(patron: Patron): boolean
+    }
+
+    class OverDueBooksSearchCriteria implements ISearchCriteria {
+        +Patron patron
+        +matches(transaction: BorrowingTransaction): boolean
+    }
+
+    class CurrentlyBorrowedBooksSearchCriteria implements ISearchCriteria {
+        +Patron patron
+        +matches(transaction: BorrowingTransaction): boolean
+    }
+
+    class PatronBorrowingHistorySearchCriteria implements ISearchCriteria {
+        +Patron patron
+        +matches(transaction: BorrowingTransaction): boolean
+    }
+
+    class OverdueBorrowedBooksSearchCriteria implements ISearchCriteria {
+        +Patron patron
+        +matches(transaction: BorrowingTransaction): boolean
+    }
+}
+
+package "Validators" {
+    abstract class Validator<T> {
+        #Dictionary<string, Func<T, bool>> Validations
+
+        +abstract initializeValidations(): void
+        +validate(item: T): boolean
+    }
+
+    class BookValidator implements Validator {
+        +validate(book: Book): boolean
+    }
+
+    class PatronValidator implements Validator {
+        +validate(patron: Patron): boolean
+    }
+
+    class BorrowingTransactionValidator implements Validator {
+        +validate(transaction: BorrowingTransaction): boolean
+    }
+
+    class ReservationValidator implements Validator {
+        +validate(reservation: Reservation): boolean
+    }
+
+    class FineValidator implements Validator {
+        +validate(fine: Fine): boolean
+    }
+}
+
+package "Entities" {
+    interface IEntity {
+        -Guid Id
+    }
+
+    class Book implements IEntity {
+        -Guid Id
+        -String title
+        -String author
+        -String ISBN
+        -String genre
+        -int publicationYear
+    }
+
+    class Patron implements IEntity {
+        -Guid Id
+        -String name
+        -int membershipNumber
+        -String contactDetails
+
+        +borrowBook(book: Book): void
+        +returnBook(book: Book): void
+    }
+
+    class BorrowingTransaction implements IEntity {
+        -Guid Id
+        -Book book
+        -Patron patron
+        -Date borrowDate
+        -Date dueDate
+        -Date returnDate
+        -Fine fine
+        -boolean returned
+        +borrowBook(): void
+        +returnBook(): void
+        ' +calculateFine(): Fine'
+    }
+
+    class Fine implements IEntity {
+        -Guid Id
+        -Patron patron
+        -double amount
+        -Date dueDate
+        -Date paidDate
+        -boolean paid
+
+        +payFine(): void;
+    }
+
+    class Reservation implements IEntity {
+        -Guid Id
+        -Patron patron
+        -Book book
+        -Date reservationDate
+        -Date expiryDate
+        -boolean canceled
+        -Date canceledDate
+
+        +isAvailable(): boolean
+        +cancel(): void
+    }
+}
+
+package "Managers" {
+    abstract class AManager<T> {
+        #List<T> items
+        #Validator<T> validator
+        #ErrorHandler errorHandler
+
+        +add(item: T): boolean
+        +abstract update(item: T): boolean
+        +remove(item: T): boolean
+        +search(criteria: ISearchCriteria<T>): List<T>
+    }
+
+    class BookManager extends AManager {
+        +update(book: Book): boolean
+    }
+
+    class PatronManager extends AManager {
+        +update(patron: Patron): boolean
+    }
+
+    class BorrowingTransactionsManager extends AManager {
+        +update(transaction: BorrowingTransaction): boolean
+    }
+
+    class ReservationManager extends AManager {
+        +update(reservation: Reservation): boolean
+    }
+
+    class FineManager extends AManager {
+        +update(fine: Fine): boolean
+        +payFine(fine: Fine): boolean
+        +calculateFine(transaction: BorrowingTransaction): Fine;
+        +calculateTotalFinesForPatron(patron: Patron): double
+    }
+
+    class Statistics {
+        -List<BorrowingTransaction> transactions
+        +getMostBorrowedBooks(limit: int): List<Book>
+        +getMostActivePatrons(limit: int): List<Patron>
+        +getMostBorrowedBooks(): List<Book>
+        +getMostActivePatrons(): List<Patron>
+    }
+}
+
+class Library {
+    -IManager<Book> bookManager
+    -IManager<Patron> patronManager
+    -IManager<BorrowingTransaction> transactionsManager
+    -IManager<Reservations> reservationManager
+    -FineManager fineManager
+    -Statistics statistics
+
+    +checkAvailabilityToBorrowBook(book: Book): boolean
+}
+
+class ErrorHandler {
+    +handleError(error: Exception): void
+}
+
+package "UInterface" {
+    class UserInterface {
+        -BookUInterface _bookUInterface
+        -PatronUInterface _patronUInterface
+        -BorrowingTransactionUInterface _transactionUInterface
+        -MainMenuUInterface _mainMenuUInterface
+
+        +UserInterface()
+        +void HandleUserInput()
+        +static string GetUserInput(string prompt)
+        +static void ShowMessage(string message)
+        +static void DisplayListResult<T>(IEnumerable<T> results)
+    }
+
+    abstract class BaseUInterface<T> {
+        protected -Library library
+        protected -SearchMenuUInterface<T> _searchInterface
+        public +MainMenuUInterface _menu
+        protected -string _menuTitle
+
+        +BaseUInterface(Library library, string menuTitle)
+        protected abstract SearchMenuUInterface<T> CreateSearchInterface()
+        protected abstract MainMenuUInterface CreateMainMenuInterface()
+    }
+
+    class PatronUInterface extends BaseUInterface {
+        +PatronUInterface(Library library)
+        protected +SearchMenuUInterface<Patron> CreateSearchInterface()
+        protected +MainMenuUInterface CreateMainMenuInterface()
+    }
+
+    class BorrowingTransactionUInterface extends BaseUInterface {
+        +BorrowingTransactionUInterface(Library library)
+        protected +SearchMenuUInterface<BorrowingTransaction> CreateSearchInterface()
+        protected +MainMenuUInterface CreateMainMenuInterface()
+        /' -void BorrowBook()
+        -void ReturnBook() '/
+        -Book? GetBookFromUser()
+        -Patron? GetPatronFromUser()
+        -Patron? GetPatronFromUser(patronId: string)
+        /' -void SearchCurrentlyBorrowedTransactions()
+        -void SearchBorrowingTransactionsHistory()
+        -void SearchOverdueBorrowedTransactions(); '/
+    }
+
+    class BookUInterface extends BaseUInterface {
+        +BookUInterface(Library library)
+        protected +SearchMenuUInterface<Book> CreateSearchInterface()
+        protected +MainMenuUInterface CreateMainMenuInterface()
+    }
+
+    class SearchMenuUInterface<T> extends MenuUInterface {
+        +SearchMenuUInterface(Dictionary<string, ICommand> searchActions, List<string> searchLabels, string searchForTitle, AManager<T> manager)
+        +static void ShowSearchedData<TCriteria>(string inputPrompt, Func<string, TCriteria?> createCriteria, AManager<T> manager)
+        +static IEntity? ShowSearchedItemById(AManager<T> manager, string titleInstruction)
+    }
+
+    class MenuUInterface {
+        #Dictionary<string, ICommand> _actions
+        #List<string> _labels
+        #string _menuInstruction
+
+        #MenuUInterface(Dictionary<string, ICommand> actions, List<string> labels, string menuInstruction)
+        -void DisplayMenu()
+        +void HandleMenu()
+    }
+
+    class MainMenuUInterface extends MenuUInterface {
+        +MainMenuUInterface(Dictionary<string, ICommand> menuActions, List<string> menuLabels, string menuForTitle)
+    }
+}
+
+package "UInterface.Command" {
+    interface ICommand {
+        +void execute()
+    }
+
+    class SearchEntityByIdCommand<T> implements ICommand {
+        -string _searchForTitle;
+        -AManager<T> _manager;
+    }
+}
+
+package "UInterface.Command.Books" {
+    class AddBookCommand implements ICommand {
+        -Library _library
+    }
+
+    class DeleteBookCommand implements ICommand {
+        -Library _library
+    }
+
+    class UpdateBookCommand implements ICommand {
+        -Library _library
+    }
+}
+
+package "UInterface.Command.Books.Search" {
+    class SearchBookByAuthorCommand implements ICommand {
+        -Library _library
+    }
+
+    class SearchBookByISBNCommand implements ICommand {
+        -Library _library
+    }
+
+    class SearchBookByTitleCommand implements ICommand {
+        -Library _library
+    }
+}
+
+package "UInterface.Command.Patron" {
+    class AddPatronCommand implements ICommand {
+        -Library _library
+    }
+
+    class DeletePatronCommand implements ICommand {
+        -Library _library
+    }
+
+    class UpdatePatronCommand implements ICommand {
+        -Library _library
+    }
+}
+
+SearchMenuUInterface *-- SearchEntityByIdCommand
+
+UserInterface *-- BookUInterface
+UserInterface *-- PatronUInterface
+UserInterface *-- BorrowingTransactionUInterface
+UserInterface *-- MainMenuUInterface
+
+SearchBookByTitleCommand *-- TitleSearchCriteria
+SearchBookByAuthorCommand *-- AuthorSearchCriteria
+SearchBookByISBNCommand *-- ISBNSearchCriteria
+
+BookUInterface *-- AddBookCommand
+BookUInterface *-- UpdateBookCommand
+BookUInterface *-- DeleteBookCommand
+
+BookUInterface *-- SearchBookByAuthorCommand
+BookUInterface *-- SearchBookByISBNCommand
+BookUInterface *-- SearchBookByTitleCommand
+
+PatronUInterface *-- NameSearchCriteria
+PatronUInterface *-- MembershipNumberSearchCriteria
+
+PatronUInterface *-- AddPatronCommand
+PatronUInterface *-- UpdatePatronCommand
+PatronUInterface *-- DeletePatronCommand
+
+BorrowingTransactionUInterface *-- CurrentlyBorrowedBooksSearchCriteria
+BorrowingTransactionUInterface *-- PatronBorrowingHistorySearchCriteria
+BorrowingTransactionUInterface *-- OverdueBorrowedBooksSearchCriteria
+
+MenuUInterface <|-- MainMenuUInterface
+
+Library *-- AManager : has
+Library *-- BookManager : has
+Library *-- PatronManager : has
+Library *-- BorrowingTransactionsManager : has
+Library *-- ReservationManager : has
+Library *-- FineManager : has
+Library *-- Statistics : has
+
+AManager *-- Validator : uses
+AManager *-- ErrorHandler : uses
+AManager *-- ISearchCriteria : uses
+
+BookManager *-- BookValidator : uses
+PatronManager *-- PatronValidator : uses
+BorrowingTransactionsManager *-- BorrowingTransactionValidator : uses
+ReservationManager *-- ReservationValidator : uses
+FineManager *-- FineValidator : uses
+
+BorrowingTransaction *-- Book : involves
+BorrowingTransaction *-- Patron : involves
+
+BookManager o-- Book : manages
+PatronManager o-- Patron : manages
+BorrowingTransactionsManager o-- BorrowingTransaction : manages
+ReservationManager o-- Reservation : manages
+FineManager o-- Fine : manages
+Statistics o-- BorrowingTransaction : analyzes
+
+UserInterface *-- Library : interacts
+' UserInterface -> ErrorHandler : uses
+
+@enduml
