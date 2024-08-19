@@ -1,3 +1,4 @@
+namespace Entities.Concretes;
 
 public class Reservation : IEntity
 {
@@ -8,6 +9,14 @@ public class Reservation : IEntity
     public DateTime ExpiryDate { get; set; }
     public bool Canceled { get; set; }
     public DateTime CanceledDate { get; set; }
+
+    public Reservation(Patron patron, Book book)
+    {
+        Id = Guid.NewGuid();
+        Patron = patron;
+        Book = book;
+        ReservationDate = DateTime.Now;
+    }
 
     public bool IsAvailable()
     {

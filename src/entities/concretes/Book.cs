@@ -1,3 +1,5 @@
+namespace Entities.Concretes;
+
 public class Book : IEntity
 {
     public Guid Id { get; }

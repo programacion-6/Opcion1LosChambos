@@ -1,3 +1,5 @@
+namespace Entities.Concretes;
+
 public class BorrowingTransaction : IEntity
 {
     public Guid Id { get; }

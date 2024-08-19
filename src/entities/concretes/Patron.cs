@@ -1,3 +1,5 @@
+namespace Entities.Concretes;
+
 public class Patron : IEntity
 {
     public Guid Id { get; }

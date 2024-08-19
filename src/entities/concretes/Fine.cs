@@ -1,3 +1,5 @@
+namespace Entities.Concretes;
+
 public class Fine : IEntity
 {
     public Guid Id { get; }
