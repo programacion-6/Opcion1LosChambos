@@ -1,4 +1,4 @@
-@startuml chambos_version_2
+@startuml chambos_version_3
 left to right direction
 
 skinparam linetype ortho
@@ -118,7 +118,7 @@ package "Entities" {
         -boolean returned
         +borrowBook(): void
         +returnBook(): void
-        ' +calculateFine(): Fine'
+        +calculateFine(): Fine
     }
 
     class Fine implements IEntity {
@@ -129,7 +129,7 @@ package "Entities" {
         -Date paidDate
         -boolean paid
 
-        +payFine(): void;
+        +payFine(): void
     }
 
     class Reservation implements IEntity {
@@ -177,7 +177,7 @@ package "Managers" {
     class FineManager extends AManager {
         +update(fine: Fine): boolean
         +payFine(fine: Fine): boolean
-        +calculateFine(transaction: BorrowingTransaction): Fine;
+        +calculateFine(transaction: BorrowingTransaction): Fine
         +calculateTotalFinesForPatron(patron: Patron): double
     }
 
@@ -191,10 +191,10 @@ package "Managers" {
 }
 
 class Library {
-    -IManager<Book> bookManager
-    -IManager<Patron> patronManager
-    -IManager<BorrowingTransaction> transactionsManager
-    -IManager<Reservations> reservationManager
+    -BookManager bookManager
+    -PatronManager patronManager
+    -BorrowingTransactionsManager transactionsManager
+    -ReservationManager reservationManager
     -FineManager fineManager
     -Statistics statistics
 
@@ -240,14 +240,14 @@ package "UInterface" {
         +BorrowingTransactionUInterface(Library library)
         protected +SearchMenuUInterface<BorrowingTransaction> CreateSearchInterface()
         protected +MainMenuUInterface CreateMainMenuInterface()
-        /' -void BorrowBook()
-        -void ReturnBook() '/
+        -void BorrowBook()
+        -void ReturnBook()
         -Book? GetBookFromUser()
         -Patron? GetPatronFromUser()
         -Patron? GetPatronFromUser(patronId: string)
-        /' -void SearchCurrentlyBorrowedTransactions()
+        -void SearchCurrentlyBorrowedTransactions()
         -void SearchBorrowingTransactionsHistory()
-        -void SearchOverdueBorrowedTransactions(); '/
+        -void SearchOverdueBorrowedTransactions()
     }
 
     class BookUInterface extends BaseUInterface {
@@ -264,78 +264,20 @@ package "UInterface" {
 
     class MenuUInterface {
         #Dictionary<string, ICommand> _actions
-        #List<string> _labels
-        #string _menuInstruction
-
-        #MenuUInterface(Dictionary<string, ICommand> actions, List<string> labels, string menuInstruction)
-        -void DisplayMenu()
-        +void HandleMenu()
+        +void ShowMenu()
     }
 
     class MainMenuUInterface extends MenuUInterface {
-        +MainMenuUInterface(Dictionary<string, ICommand> menuActions, List<string> menuLabels, string menuForTitle)
+        +void ShowMainMenu()
     }
 }
-
-package "UInterface.Command" {
-    interface ICommand {
-        +void execute()
-    }
-
-    class SearchEntityByIdCommand<T> implements ICommand {
-        -string _searchForTitle;
-        -AManager<T> _manager;
-    }
-}
-
-package "UInterface.Command.Books" {
-    class AddBookCommand implements ICommand {
-        -Library _library
-    }
-
-    class DeleteBookCommand implements ICommand {
-        -Library _library
-    }
-
-    class UpdateBookCommand implements ICommand {
-        -Library _library
-    }
-}
-
-package "UInterface.Command.Books.Search" {
-    class SearchBookByAuthorCommand implements ICommand {
-        -Library _library
-    }
-
-    class SearchBookByISBNCommand implements ICommand {
-        -Library _library
-    }
-
-    class SearchBookByTitleCommand implements ICommand {
-        -Library _library
-    }
-}
-
-package "UInterface.Command.Patron" {
-    class AddPatronCommand implements ICommand {
-        -Library _library
-    }
-
-    class DeletePatronCommand implements ICommand {
-        -Library _library
-    }
-
-    class UpdatePatronCommand implements ICommand {
-        -Library _library
-    }
-}
-
-SearchMenuUInterface *-- SearchEntityByIdCommand
 
 UserInterface *-- BookUInterface
 UserInterface *-- PatronUInterface
 UserInterface *-- BorrowingTransactionUInterface
 UserInterface *-- MainMenuUInterface
+
+SearchMenuUInterface *-- SearchEntityByIdCommand
 
 SearchBookByTitleCommand *-- TitleSearchCriteria
 SearchBookByAuthorCommand *-- AuthorSearchCriteria
@@ -391,6 +333,6 @@ FineManager o-- Fine : manages
 Statistics o-- BorrowingTransaction : analyzes
 
 UserInterface *-- Library : interacts
-' UserInterface -> ErrorHandler : uses
+UserInterface -> ErrorHandler : uses
 
 @enduml
