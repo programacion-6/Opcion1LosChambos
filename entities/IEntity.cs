@@ -1,4 +1,4 @@
-namespace Entities;
+namespace LosChambos.entities;
 
 public interface IEntity
 {
