@@ -1,4 +1,4 @@
-﻿using LosChambos.entities.concretes;
+﻿using LosChambos.Entities.Concretes;
 
 namespace LosChambos.SearchCriteria.Books;
 
