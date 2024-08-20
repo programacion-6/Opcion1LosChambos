@@ -1,4 +1,6 @@
 using LosChambos.Entities.Concretes;
+using LosChambos.ErrorHandling;
+using LosChambos.ErrorHandling.Exceptions;
 using LosChambos.Validators.Concretes;
 
 namespace LosChambos.Managers;
@@ -31,10 +33,9 @@ public class FineManager : AManager<Fine>
                 return true;
             }
         }
-        catch (Exception exception)
+        catch (ValidationException exception)
         {
-            // TODO: Handle exception
-            Console.WriteLine(exception);
+            ErrorHandler.HandleError(exception);
         }
         return false;
     }

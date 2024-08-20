@@ -1,4 +1,6 @@
-﻿namespace LosChambos.Validators;
+﻿using LosChambos.ErrorHandling.Exceptions;
+
+namespace LosChambos.Validators;
 
 public abstract class Validator<T>
 {
@@ -18,7 +20,7 @@ public abstract class Validator<T>
         {
             if (!validation.Value(item))
             {
-                // TODO: Implement Custom Exception for Validation
+                throw new ValidationException(validation.Key);
             }
         }
         return true;
