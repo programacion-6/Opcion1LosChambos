@@ -31,7 +31,7 @@ public class PatronManager : AManager<Patron>
         catch (Exception exception)
         {
             Console.WriteLine(exception);
-            // TODO Handle exception
+            // TODO: Handle exception
         }
         return false;
     }
