@@ -330,6 +330,41 @@ package "UInterface.Command.Patron" {
     }
 }
 
+package "UInterface.Command.Patron.Search" {
+    class SearchPatronByMembershipNumberCommand implements ICommand {
+        -Library _library
+    }
+
+    class SearchPatronByNameCommand implements ICommand {
+        -Library _library
+    }
+}
+
+package "UInterface.Command.BorrowingTransactions" {
+    class BorrowBookCommand implements ICommand {
+        -Library _library
+    }
+
+    class ReturnBookCommand implements ICommand {
+        -Library _library
+    }
+}
+
+package "UInterface.Command.BorrowingTransactions.Search" {
+    class SearchBorrowedTransactionsHistoryCommand implements ICommand {
+        -Library _library
+    }
+
+    class SearchCurrentlyBorrowedTransactionsCommand implements ICommand {
+        -Library _library
+    }
+
+    class SearchOverdueBorrowedTransactionsCommand implements ICommand {
+        -Library _library
+    }
+}
+
+
 SearchMenuUInterface *-- SearchEntityByIdCommand
 
 UserInterface *-- BookUInterface
@@ -349,16 +384,25 @@ BookUInterface *-- SearchBookByAuthorCommand
 BookUInterface *-- SearchBookByISBNCommand
 BookUInterface *-- SearchBookByTitleCommand
 
-PatronUInterface *-- NameSearchCriteria
-PatronUInterface *-- MembershipNumberSearchCriteria
 
 PatronUInterface *-- AddPatronCommand
 PatronUInterface *-- UpdatePatronCommand
 PatronUInterface *-- DeletePatronCommand
 
-BorrowingTransactionUInterface *-- CurrentlyBorrowedBooksSearchCriteria
-BorrowingTransactionUInterface *-- PatronBorrowingHistorySearchCriteria
-BorrowingTransactionUInterface *-- OverdueBorrowedBooksSearchCriteria
+PatronUInterface *-- SearchPatronByMembershipNumberCommand
+PatronUInterface *-- SearchPatronByNameCommand
+
+SearchPatronByNameCommand *-- NameSearchCriteria
+SearchPatronByMembershipNumberCommand *-- MembershipNumberSearchCriteria
+
+
+BorrowingTransactionUInterface *-- BorrowBookCommand
+BorrowingTransactionUInterface *-- ReturnBookCommand
+
+BorrowingTransactionUInterface *-- SearchBorrowedTransactionsHistoryCommand
+BorrowingTransactionUInterface *-- SearchCurrentlyBorrowedTransactionsCommand
+BorrowingTransactionUInterface *-- SearchOverdueBorrowedTransactionsCommand
+
 
 MenuUInterface <|-- MainMenuUInterface
 
