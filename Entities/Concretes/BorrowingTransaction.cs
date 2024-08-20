@@ -1,4 +1,4 @@
-namespace LosChambos.entities.concretes;
+namespace LosChambos.Entities.Concretes;
 
 public class BorrowingTransaction : IEntity
 {

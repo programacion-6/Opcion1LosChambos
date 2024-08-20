@@ -1,5 +1,4 @@
-namespace LosChambos.entities.concretes;
-
+namespace LosChambos.Entities.Concretes;
 public class Fine : IEntity
 {
     public Guid Id { get; }
