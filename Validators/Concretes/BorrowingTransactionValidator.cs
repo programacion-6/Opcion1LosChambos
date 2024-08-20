@@ -12,7 +12,10 @@ public class BorrowingTransactionValidator : Validator<BorrowingTransaction>
             "Borrowed date must be set.",
             transaction => transaction.BorrowedDate != default
         );
-        Validations.Add("Due date must be set.", transaction => transaction.DueDate != default);
+        Validations.Add(
+            "Due date must be set.",
+            transaction => transaction.DueDate != default
+        );
         Validations.Add(
             "Borrowed date must be before or equal to due date.",
             transaction => transaction.BorrowedDate <= transaction.DueDate
@@ -20,7 +23,11 @@ public class BorrowingTransactionValidator : Validator<BorrowingTransaction>
         Validations.Add(
             "If returned, returned date must be after or equal to borrowed date.",
             transaction =>
-                !transaction.Returned || transaction.ReturnedDate >= transaction.BorrowedDate
+                !transaction.Returned
+                || (
+                    transaction.ReturnedDate.HasValue
+                    && transaction.ReturnedDate >= transaction.BorrowedDate
+                )
         );
     }
 }

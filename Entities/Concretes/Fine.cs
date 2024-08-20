@@ -5,7 +5,7 @@ public class Fine : IEntity
     public Patron Patron;
     public double Amount;
     public DateTime DueDate;
-    public DateTime PaidDate;
+    public DateTime? PaidDate;
     public bool Paid;
 
     public Fine(Patron patron, double amount, DateTime dueDate)
