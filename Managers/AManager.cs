@@ -1,4 +1,7 @@
+using System.ComponentModel.DataAnnotations;
 using LosChambos.Entities;
+using LosChambos.SearchCriteria;
+using LosChambos.Validators;
 
 namespace LosChambos.Managers;
 
@@ -30,9 +33,9 @@ public abstract class AManager<T>
                 return true;
             }
         }
-        catch (ValidationException exception)
+        catch (Exception exception)
         {
-            ErrorHandler.HandleError(exception);
+            //TODO: Handle exception
         }
         return false;
     }

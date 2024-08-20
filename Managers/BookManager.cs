@@ -1,3 +1,6 @@
+using LosChambos.Entities.Concretes;
+using LosChambos.Validators.Concretes;
+
 namespace LosChambos.Managers;
 
 public class BookManager : AManager<Book>
@@ -25,9 +28,9 @@ public class BookManager : AManager<Book>
                 return true;
             }
         }
-        catch (ValidationException exception)
+        catch (Exception exception)
         {
-            ErrorHandler.HandleError(exception);
+            //TODO: Handle exception
         }
         return false;
     }
