@@ -36,6 +36,7 @@ public abstract class AManager<T>
         catch (Exception exception)
         {
             //TODO: Handle exception
+            Console.WriteLine(exception);
         }
         return false;
     }

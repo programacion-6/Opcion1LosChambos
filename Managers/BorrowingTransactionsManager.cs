@@ -32,6 +32,7 @@ public class BorrowingTransactionsManager : AManager<BorrowingTransaction>
         catch (Exception exception)
         {
             // TODO Handle exception
+            Console.WriteLine(exception);
         }
         return false;
     }

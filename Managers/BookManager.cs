@@ -31,6 +31,7 @@ public class BookManager : AManager<Book>
         catch (Exception exception)
         {
             //TODO: Handle exception
+            Console.WriteLine(exception);
         }
         return false;
     }
