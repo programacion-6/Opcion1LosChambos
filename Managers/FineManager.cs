@@ -33,7 +33,7 @@ public class FineManager : AManager<Fine>
         }
         catch (Exception exception)
         {
-            // TODO Handle exception
+            // TODO: Handle exception
             Console.WriteLine(exception);
         }
         return false;
