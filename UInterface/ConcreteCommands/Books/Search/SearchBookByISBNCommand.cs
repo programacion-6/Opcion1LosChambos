@@ -1,4 +1,5 @@
 using LosChambos.Entities;
+using LosChambos.Entities.Concretes;
 using LosChambos.SearchCriteria.Books;
 using LosChambos.UInterface.CommandInterface;
 using LosChambos.UInterface.Menu;
