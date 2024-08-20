@@ -1,6 +1,5 @@
 using LosChambos.Entities;
 using LosChambos.UInterface.CommandInterface;
-using LosChambos.UInterface.Menu;
 
 namespace LosChambos.UInterface.ConcreteCommands.BorrowingTransactions;
 
@@ -29,15 +28,17 @@ public class ReturnBookCommand : ICommand
             UserInterface.ShowMessage("Transaction not found.");
             return;
         }
+        else
+        {
+            transaction.ReturnBook();
+            bool success = _library.BorrowingTransactionsManager.Update(transaction);
 
-        transaction.ReturnBook();
-        bool success = _library.BorrowingTransactionsManager.Update(transaction);
+            UserInterface.ShowMessage(
+                success ? "Book returned successfully." : "Failed to return book."
+            );
 
-        UserInterface.ShowMessage(
-            success ? "Book returned successfully." : "Failed to return book."
-        );
-
-        _library.FineManager.CalculateFine(transaction);
-        UserInterface.ShowMessage(transaction.ToString());
+            _library.FineManager.CalculateFine(transaction);
+            UserInterface.ShowMessage(transaction.ToString());
+        }
     }
 }

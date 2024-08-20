@@ -4,7 +4,7 @@ using LosChambos.SearchCriteria.Books;
 using LosChambos.UInterface.CommandInterface;
 using LosChambos.UInterface.Menu;
 
-namespace Opcion1FabianRomero.src.UInterface.ConcreteCommands.Books.Search;
+namespace LosChambos.UInterface.ConcreteCommands.Books.Search;
 
 public class SearchBookByISBNCommand : ICommand
 {

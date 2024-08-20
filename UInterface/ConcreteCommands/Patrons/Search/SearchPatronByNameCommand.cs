@@ -4,7 +4,7 @@ using LosChambos.SearchCriteria.Patrons;
 using LosChambos.UInterface.CommandInterface;
 using LosChambos.UInterface.Menu;
 
-namespace LosChambos.UInterface.ConcreteCommands.Books.Search;
+namespace LosChambos.UInterface.ConcreteCommands.Patrons.Search;
 
 public class SearchPatronByNameCommand : ICommand
 {

@@ -1,3 +1,4 @@
+using LosChambos.Entities;
 using LosChambos.UInterface.CommandInterface;
 
 namespace LosChambos.UInterface.ConcreteCommands.Patrons;
