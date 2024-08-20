@@ -7,7 +7,7 @@ public class BorrowingTransaction : IEntity
     public Patron Patron;
     public DateTime BorrowedDate; 
     public DateTime DueDate;
-    public DateTime ReturnedDate;
+    public DateTime? ReturnedDate;
     public Fine? Fine;
     public bool Returned;
 
@@ -18,6 +18,7 @@ public class BorrowingTransaction : IEntity
         Patron = patron;
         DueDate = dueDate;
         BorrowedDate = DateTime.Now;
+        Returned = false;
     }
 
     public void BorrowBook()
