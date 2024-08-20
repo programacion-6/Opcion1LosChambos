@@ -1,4 +1,3 @@
-
 using LosChambos.Entities.Concretes;
 using LosChambos.Managers;
 
@@ -16,10 +15,5 @@ public class Library
         PatronManager = new PatronManager();
         BorrowingTransactionsManager = new BorrowingTransactionsManager();
         FineManager = new FineManager();
-    }
-
-    public bool CheckAvailabilityToBorrowBook(Book book)
-    {
-        return true;
     }
 }
