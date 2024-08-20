@@ -3,7 +3,7 @@ using LosChambos.Managers;
 using LosChambos.UInterface.CommandInterface;
 using LosChambos.UInterface.Menu;
 
-namespace LosChambos.UInterface.ConcreteCommands;
+namespace LosChambos.UInterface.ConcreteCommands.Search;
 
 public class SearchEntityByIdCommand<TEntity> : ICommand 
     where TEntity : IEntity

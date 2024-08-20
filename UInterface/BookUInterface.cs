@@ -3,6 +3,7 @@ using LosChambos.Entities.Concretes;
 using LosChambos.UInterface.CommandInterface;
 using LosChambos.UInterface.ConcreteCommands.Books;
 using LosChambos.UInterface.ConcreteCommands.Books.Search;
+using LosChambos.UInterface.ConcreteCommands.Search;
 using LosChambos.UInterface.Menu;
 
 namespace LosChambos.UInterface;

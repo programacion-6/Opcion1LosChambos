@@ -2,7 +2,7 @@
 using LosChambos.Managers;
 using LosChambos.SearchCriteria;
 using LosChambos.UInterface.CommandInterface;
-using LosChambos.UInterface.ConcreteCommands;
+using LosChambos.UInterface.ConcreteCommands.Search;
 
 namespace LosChambos.UInterface.Menu;
 
