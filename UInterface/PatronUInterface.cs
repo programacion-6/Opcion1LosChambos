@@ -1,8 +1,12 @@
-using LosChambos.Entities;
 using LosChambos.Entities.Concretes;
+using LosChambos.UInterface;
 using LosChambos.UInterface.CommandInterface;
+using LosChambos.UInterface.ConcreteCommands.Patrons;
+using LosChambos.UInterface.ConcreteCommands.Patrons.Search;
+using LosChambos.UInterface.ConcreteCommands.Search;
+using LosChambos.UInterface.Menu;
 
-namespace LosChambos.UInterface;
+namespace LosChambos.Entities;
 
 public class PatronUInterface : BaseUInterface<Patron>
 {

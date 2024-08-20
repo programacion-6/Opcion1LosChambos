@@ -3,6 +3,8 @@ using LosChambos.Entities.Concretes;
 using LosChambos.UInterface.CommandInterface;
 using LosChambos.UInterface.ConcreteCommands.BorrowingTransactions;
 using LosChambos.UInterface.Menu;
+using LosChambos.UInterface.ConcreteCommands.BorrowingTransactions.Search;
+using LosChambos.UInterface.ConcreteCommands.Search;
 
 namespace LosChambos.UInterface;
 
@@ -48,6 +50,7 @@ public class BorrowingTransactionUInterface : BaseUInterface<BorrowingTransactio
 
         return new MainMenuUInterface(menuCommands, menuLabels, _menuTitle);
     }
+
     public static Patron? GetPatronFromUser(Library _library, string patronId)
     {
         var guid = Guid.TryParse(patronId, out var resultPatronId);

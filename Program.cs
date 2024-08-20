@@ -1,7 +1,10 @@
-﻿public class Program
+﻿using LosChambos.UInterface;
+
+public class Program
 {
     public static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        var ui = new UserInterface();
+        ui.HandleUserInput();
     }
 }

@@ -1,12 +1,29 @@
 ﻿using LosChambos.Entities;
 using LosChambos.Managers;
 using LosChambos.SearchCriteria;
+using LosChambos.UInterface.CommandInterface;
+using LosChambos.UInterface.ConcreteCommands.Search;
 
 namespace LosChambos.UInterface.Menu;
 
-public class SearchMenuUInterface<TEntity>
+public class SearchMenuUInterface<TEntity> : MenuUInterface
     where TEntity : IEntity
 {
+    public SearchMenuUInterface(
+        Dictionary<string, ICommand> searchCommands,
+        List<string> searchLabels,
+        string searchForTitle,
+        AManager<TEntity> manager
+    )
+        : base(searchCommands, searchLabels, $"Search {searchForTitle} by: ")
+    {
+        _labels.Add("ID");
+        searchCommands.Add(
+            _labels.Count.ToString(),
+            new SearchEntityByIdCommand<TEntity>(searchForTitle, manager)
+        );
+    }
+
     public static void ShowSearchedData<TCriteria>(
         string inputPrompt,
         Func<string, TCriteria?> createCriteria,
