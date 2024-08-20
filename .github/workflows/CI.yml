@@ -4,7 +4,6 @@ on:
   pull_request:
     branches:
       - develop
-      - feature/ID-11/implement-ci # Pruebas de integración continua
 
 jobs:
   build:
