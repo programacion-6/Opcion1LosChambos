@@ -18,4 +18,15 @@ public class Book : IEntity
         Genre = genre;
         PublicationYear = publicationYear;
     }
+
+    public override string ToString()
+    {
+        return $"Book:\n"
+            + $"Id: {Id}\n"
+            + $"Title: {Title}\n"
+            + $"Author: {Author}\n"
+            + $"ISBN: {ISBN}\n"
+            + $"Genre: {Genre}\n"
+            + $"PublicationYear: {PublicationYear}\n";
+    }
 }

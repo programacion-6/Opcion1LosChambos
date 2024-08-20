@@ -20,4 +20,13 @@ public class Patron : IEntity
 
     public void ReturnBook(Book book)
     {}
+
+    public override string ToString()
+    {
+        return $"Patron:\n"
+            + $"Id: {Id}\n"
+            + $"Name: {Name}\n"
+            + $"MembershipNumber: {MembershipNumber}\n"
+            + $"ContactDetails: {ContactDetails}";
+    }
 }
