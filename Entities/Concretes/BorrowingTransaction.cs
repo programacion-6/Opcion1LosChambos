@@ -5,7 +5,7 @@ public class BorrowingTransaction : IEntity
     public Guid Id { get; }
     public Book Book;
     public Patron Patron;
-    public DateTime BorrowedDate; 
+    public DateTime BorrowedDate;
     public DateTime DueDate;
     public DateTime? ReturnedDate;
     public Fine? Fine;
@@ -31,5 +31,18 @@ public class BorrowingTransaction : IEntity
     {
         Returned = true;
         ReturnedDate = DateTime.Now;
+    }
+
+    public override string ToString()
+    {
+        return $"Borrowing Transaction:"
+            + $"Id: {Id}\n"
+            + $"Book: \t {Book}\n===================\n"
+            + $"Patron: \t {Patron}\n===================\n"
+            + $"Borrowed Date: {BorrowedDate:yyyy-MM-dd}\n"
+            + $"Due Date: {DueDate}\n"
+            + $"Returned Date: {ReturnedDate:yyyy-MM-dd}\n"
+            + $"Returned: {Returned}\n"
+            + $"Fine: {(Fine != null ? Fine + "\n===================" : "None")}\n";
     }
 }

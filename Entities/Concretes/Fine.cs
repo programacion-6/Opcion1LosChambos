@@ -21,4 +21,15 @@ public class Fine : IEntity
         Paid = true;
         PaidDate = DateTime.Now;
     }
+
+    public override string ToString()
+    {
+        return $"Fine:\n"
+            + $"Id: {Id}\n"
+            + $"Patron: \t {Patron}\n===================\n"
+            + $"Amount: {Amount}\n"
+            + $"DueDate: {DueDate:yyyy-MM-dd}\n"
+            + $"PaidDate: {PaidDate:yyyy-MM-dd}\n"
+            + $"Paid: {Paid}\n";
+    }
 }
