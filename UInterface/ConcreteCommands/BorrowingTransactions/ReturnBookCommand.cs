@@ -38,7 +38,7 @@ public class ReturnBookCommand : ICommand
             );
 
             _library.FineManager.CalculateFine(transaction);
-            UserInterface.ShowMessage(transaction.ToString());
+            UserInterface.ShowMessage(transaction.ToString() ?? "Transaction not found.");
         }
     }
 }
