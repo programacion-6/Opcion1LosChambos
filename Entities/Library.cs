@@ -2,6 +2,7 @@ using LosChambos.Entities.Concretes;
 using LosChambos.Managers;
 
 namespace LosChambos.Entities;
+
 public class Library
 {
     public AManager<Book> BookManager { get; }
