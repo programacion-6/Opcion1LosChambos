@@ -35,11 +35,23 @@ public class BorrowBookCommand : ICommand
             return;
         }
         var transaction = new BorrowingTransaction(book, patron, resultDueDate);
-        bool success = _library.BorrowingTransactionsManager.Add(transaction);
 
-        UserInterface.ShowMessage(
-            success ? "Book borrowed successfully." : "Failed to borrow book."
-        );
+        if (
+            !_library.BorrowingTransactionsManager.Items.Any(transaction =>
+                transaction.Book.Id == book.Id && !transaction.Returned
+            )
+        )
+        {
+            bool success = _library.BorrowingTransactionsManager.Add(transaction);
+
+            UserInterface.ShowMessage(
+                success ? "Book borrowed successfully." : "Failed to borrow book."
+            );
+        } else {
+            UserInterface.ShowMessage(
+                "Failed. Book is currently borrowed."
+            );
+        }
     }
 
     private Book? GetBookFromUser()
