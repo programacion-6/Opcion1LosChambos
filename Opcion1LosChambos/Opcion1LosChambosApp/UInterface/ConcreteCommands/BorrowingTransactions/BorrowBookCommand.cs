@@ -16,13 +16,11 @@ public class BorrowBookCommand : ICommand
 
     public void Execute()
     {
-        var patron = GetPatronFromUser();
-        if (patron == null)
-            return;
+        UserInterface.ShowMessage("SELECT A PATRON");
+        var patron = UserInterface.DisplaySelectableListResult(_library.PatronManager.Items); 
 
-        var book = GetBookFromUser();
-        if (book == null)
-            return;
+        UserInterface.ShowMessage("SELECT A BOOK");
+        var book = UserInterface.DisplaySelectableListResult(_library.BookManager.Items); 
 
         var dueDate = DateTime.TryParse(
             UserInterface.GetUserInput("Enter due date (yyyy-MM-dd): "),

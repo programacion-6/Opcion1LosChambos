@@ -32,8 +32,11 @@ public class UserInterface
             { "3", new HandleMenuCommand<BorrowingTransaction>(_transactionUInterface) },
         };
 
-        var menuLabels = new List<string> {
-            "Manage Books", "Manage Patrons", "Manage Borrowing Transactions"
+        var menuLabels = new List<string>
+        {
+            "Manage Books",
+            "Manage Patrons",
+            "Manage Borrowing Transactions"
         };
 
         _mainMenuUInterface = new MainMenuUInterface(menuCommands, menuLabels, "Library");
@@ -68,4 +71,17 @@ public class UserInterface
         }
     }
 
+    public static T DisplaySelectableListResult<T>(IEnumerable<T> choices)
+        where T : notnull
+    {
+        var selectedChoice = AnsiConsole.Prompt(
+            new SelectionPrompt<T>()
+                .Title("[yellow]Select an option[/]")
+                .PageSize(3)
+                .MoreChoicesText("[grey](Move up and down to reveal more options)[/]")
+                .AddChoices(choices)
+        );
+
+        return selectedChoice;
+    }
 }

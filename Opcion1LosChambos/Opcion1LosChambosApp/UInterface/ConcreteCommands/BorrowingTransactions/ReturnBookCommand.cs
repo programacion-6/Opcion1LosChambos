@@ -14,14 +14,9 @@ public class ReturnBookCommand : ICommand
 
     public void Execute()
     {
-        var transactionId = UserInterface.GetUserInput("Enter Transaction Id: ");
-        var guid = Guid.TryParse(transactionId, out Guid resultGuid);
-        if (!guid)
-        {
-            UserInterface.ShowMessage("Invalid Id format");
-            return;
-        }
-        var transaction = _library.BorrowingTransactionsManager.GetItemById(resultGuid);
+        var transaction = UserInterface.DisplaySelectableListResult(
+            _library.BorrowingTransactionsManager.Items
+        );
 
         if (transaction == null)
         {

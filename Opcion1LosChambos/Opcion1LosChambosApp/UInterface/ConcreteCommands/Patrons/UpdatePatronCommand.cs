@@ -14,16 +14,7 @@ public class UpdatePatronCommand : ICommand
 
     public void Execute()
     {
-        var patronId = UserInterface.GetUserInput("Enter Id of the patron to update: ");
-        var guid = Guid.TryParse(patronId, out Guid inputParsed);
-
-        if(!guid)
-        {
-            UserInterface.ShowMessage("Invalid Id format.");
-            return;
-        }
-        
-        var patron = _library.PatronManager.Items.Find(patron => patron.Id == inputParsed);
+        var patron = UserInterface.DisplaySelectableListResult(_library.PatronManager.Items); 
 
         if (patron != null)
         {

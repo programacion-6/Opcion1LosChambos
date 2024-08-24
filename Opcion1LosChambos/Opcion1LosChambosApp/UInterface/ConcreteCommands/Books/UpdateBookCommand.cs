@@ -14,7 +14,7 @@ public class UpdateBookCommand : ICommand
 
     public void Execute()
     {
-        var book = _library.BookManager.Items.Find(book => book.Id == TryParseId());
+        var book = UserInterface.DisplaySelectableListResult(_library.BookManager.Items); 
 
         if (book != null)
         {

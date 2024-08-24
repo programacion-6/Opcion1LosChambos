@@ -14,16 +14,7 @@ public class DeletePatronCommand : ICommand
 
     public void Execute()
     {
-        var patronId = UserInterface.GetUserInput("Enter Id number of the patron to delete: ");
-        var guid = Guid.TryParse(patronId, out Guid inputParsed);
-
-        if(!guid)
-        {
-            UserInterface.ShowMessage("Invalid Id format.");
-            return;
-        }
-
-        var patron = _library.PatronManager.Items.Find(patron => patron.Id == inputParsed);
+        var patron = UserInterface.DisplaySelectableListResult(_library.PatronManager.Items); 
 
         if (patron != null)
         {

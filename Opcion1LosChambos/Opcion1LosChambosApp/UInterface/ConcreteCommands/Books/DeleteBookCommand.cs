@@ -14,16 +14,7 @@ public class DeleteBookCommand : ICommand
 
     public void Execute()
     {
-        var bookId = UserInterface.GetUserInput("Enter Id of the book to delete: ");
-        var guid  = Guid.TryParse(bookId, out Guid inputParsed);
-
-        if(!guid)
-        {
-            UserInterface.ShowMessage("Invalid Id Format");
-            return;
-        }
-        
-        var book = _library.BookManager.Items.Find(book => book.Id == inputParsed);
+        var book = UserInterface.DisplaySelectableListResult(_library.BookManager.Items); 
 
         if (book != null)
         {
