@@ -17,16 +17,10 @@ public class SearchOverdueBorrowedTransactionsCommand : ICommand
 
     public void Execute()
     {
-        SearchMenuUInterface<BorrowingTransaction>.ShowSearchedData(
-            "Enter patron Id: ",
-            patronId =>
-            {
-                var patron = BorrowingTransactionUInterface.GetPatronFromUser(_library, patronId);
+        var patron = UserInterface.DisplaySelectableListResult(_library.PatronManager.Items);
 
-                if (patron == null)
-                    return null;
-                return new OverdueBorrowedBooksSearchCriteria(patron);
-            },
+        SearchMenuUInterface<BorrowingTransaction>.ShowSearchedDataWithoutPrompt(
+            new OverdueBorrowedBooksSearchCriteria(patron),
             _library.BorrowingTransactionsManager
         );
     }

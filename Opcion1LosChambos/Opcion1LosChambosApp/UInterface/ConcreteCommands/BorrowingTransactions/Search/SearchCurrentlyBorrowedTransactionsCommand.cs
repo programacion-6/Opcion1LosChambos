@@ -17,15 +17,10 @@ public class SearchCurrentlyBorrowedTransactionsCommand : ICommand
 
     public void Execute()
     {
-        SearchMenuUInterface<BorrowingTransaction>.ShowSearchedData(
-            "Enter patron Id: ",
-            patronId =>
-            {
-                var patron = BorrowingTransactionUInterface.GetPatronFromUser(_library, patronId);
-                if (patron == null)
-                    return null;
-                return new CurrentlyBorrowedBooksSearchCriteria(patron);
-            },
+        var patron = UserInterface.DisplaySelectableListResult(_library.PatronManager.Items);
+
+        SearchMenuUInterface<BorrowingTransaction>.ShowSearchedDataWithoutPrompt(
+            new CurrentlyBorrowedBooksSearchCriteria(patron),
             _library.BorrowingTransactionsManager
         );
     }

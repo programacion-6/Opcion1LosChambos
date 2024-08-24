@@ -17,16 +17,10 @@ public class SearchBorrowedTransactionsHistoryCommand : ICommand
 
     public void Execute()
     {
-        SearchMenuUInterface<BorrowingTransaction>.ShowSearchedData(
-            "Enter patron Id: ",
-            patronId =>
-            {
-                var patron = BorrowingTransactionUInterface.GetPatronFromUser(_library, patronId);
+        var patron = UserInterface.DisplaySelectableListResult(_library.PatronManager.Items);
 
-                if (patron == null)
-                    return null;
-                return new PatronBorrowingHistorySearchCriteria(patron);
-            },
+        SearchMenuUInterface<BorrowingTransaction>.ShowSearchedDataWithoutPrompt(
+            new PatronBorrowingHistorySearchCriteria(patron),
             _library.BorrowingTransactionsManager
         );
     }
