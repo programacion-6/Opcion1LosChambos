@@ -16,7 +16,7 @@ public class AddPatronCommand : ICommand
     public void Execute()
     {
         var name = UserInterface.GetUserInput("Enter patron name: ");
-        var membershipNumber = int.Parse(UserInterface.GetUserInput("Enter membership number: "));
+        var membershipNumber = TryParseMembershipNumber();
         var contactDetails = UserInterface.GetUserInput("Enter contact details: ");
 
         var patron = new Patron(name, membershipNumber, contactDetails);
@@ -25,7 +25,7 @@ public class AddPatronCommand : ICommand
         UserInterface.ShowMessage(success ? "Patron added successfully." : "Failed to add patron.");
     }
 
-    private int tryParseMembershipNumber()
+    private int TryParseMembershipNumber()
     {
         if(int.TryParse(UserInterface.GetUserInput("Enter membership number: "), out int inputParsed))
         {
@@ -34,7 +34,7 @@ public class AddPatronCommand : ICommand
         else
         {
             UserInterface.ShowMessage("Enter a correct value.");
-            return tryParseMembershipNumber();
+            return TryParseMembershipNumber();
         }
     }
 }
