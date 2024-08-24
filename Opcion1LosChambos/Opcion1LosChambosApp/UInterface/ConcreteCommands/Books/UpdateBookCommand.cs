@@ -21,9 +21,7 @@ public class UpdateBookCommand : ICommand
             book.Title = UserInterface.GetUserInput("Enter new title: ");
             book.Author = UserInterface.GetUserInput("Enter new author: ");
             book.Genre = UserInterface.GetUserInput("Enter new genre: ");
-            book.PublicationYear = int.Parse(
-                UserInterface.GetUserInput("Enter new publication year: ")
-            );
+            book.PublicationYear = tryParsePublicationYear();
 
             bool success = _library.BookManager.Update(book);
             UserInterface.ShowMessage(
@@ -33,6 +31,19 @@ public class UpdateBookCommand : ICommand
         else
         {
             UserInterface.ShowMessage("Book not found.");
+        }
+    }
+
+    private int tryParsePublicationYear()
+    {
+        if(int.TryParse(UserInterface.GetUserInput("Enter new publication year: "), out int inputParsed))
+        {
+            return inputParsed;
+        }
+        else
+        {
+            UserInterface.ShowMessage("Enter a correct value.");
+            return tryParsePublicationYear();
         }
     }
 }
