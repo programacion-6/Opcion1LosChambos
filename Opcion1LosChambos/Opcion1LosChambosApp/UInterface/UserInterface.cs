@@ -1,5 +1,7 @@
-﻿using LosChambos.Entities;
+﻿using LosChambos.DataLoader;
+using LosChambos.Entities;
 using LosChambos.Entities.Concretes;
+using LosChambos.Pagination;
 using LosChambos.UInterface.CommandInterface;
 using LosChambos.UInterface.ConcreteCommands.UserInterfaces;
 using LosChambos.UInterface.Menu;
@@ -18,6 +20,7 @@ public class UserInterface
     public UserInterface()
     {
         var library = new Library();
+        LocalData.LoadData(library);
         _bookUInterface = new BookUInterface(library);
         _patronUInterface = new PatronUInterface(library);
         _transactionUInterface = new BorrowingTransactionUInterface(library);
@@ -53,14 +56,16 @@ public class UserInterface
 
     public static void DisplayListResult<T>(IEnumerable<T> results)
     {
-        if (results.Any())
+        var resultsList = results.ToList();
+        if (resultsList.Any())
         {
-            foreach (var item in results)
-                ShowMessage(item?.ToString() ?? "Null item");
+            var paginator = new Paginator<T>(resultsList);
+            paginator.DisplayPaginatedList();
         }
         else
         {
-            Console.WriteLine("No data found.");
+            AnsiConsole.MarkupLine("[red]No data found.[/]");
         }
     }
+
 }
