@@ -34,19 +34,6 @@ public class UpdateBookCommand : ICommand
         }
     }
 
-    private Guid TryParseId()
-    {
-        if(Guid.TryParse(UserInterface.GetUserInput("Enter Id of the book to update: "), out Guid inputParsed))
-        {
-            return inputParsed;
-        }
-        else
-        {
-            UserInterface.ShowMessage("Enter a correct value.");
-            return TryParseId();
-        }
-    }
-
     private int tryParsePublicationYear()
     {
         if(int.TryParse(UserInterface.GetUserInput("Enter new publication year: "), out int inputParsed))
