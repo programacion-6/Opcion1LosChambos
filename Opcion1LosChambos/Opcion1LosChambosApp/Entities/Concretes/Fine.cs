@@ -25,7 +25,6 @@ public class Fine : IEntity
     public override string ToString()
     {
         return $"Fine:\n"
-            + $"Id: {Id}\n"
             + $"Patron: \t {Patron}\n===================\n"
             + $"Amount: {Amount}\n"
             + $"DueDate: {DueDate:yyyy-MM-dd}\n"

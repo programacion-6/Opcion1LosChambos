@@ -33,7 +33,6 @@ public class Reservation : IEntity
     public override string ToString()
     {
         return $"Reservation:\n"
-            + $"Id: {Id}\n"
             + $"Patron: {Patron}\n===================\n"
             + $"Book: {Book}\n===================\n"
             + $"ReservationDate: {ReservationDate:yyyy-MM-dd}\n"

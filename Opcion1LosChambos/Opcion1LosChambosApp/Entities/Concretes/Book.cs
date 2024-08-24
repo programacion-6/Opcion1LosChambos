@@ -22,7 +22,6 @@ public class Book : IEntity
     public override string ToString()
     {
         return $"Book:\n"
-            + $"Id: {Id}\n"
             + $"Title: {Title}\n"
             + $"Author: {Author}\n"
             + $"ISBN: {ISBN}\n"
