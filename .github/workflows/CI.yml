@@ -26,4 +26,4 @@ jobs:
       run: dotnet build Opcion1LosChambos/Opcion1LosChambosApp/LosChambos.csproj --configuration Release --no-restore
 
     - name: Test
-      run: dotnet test Opcion1LosChambos/Opcion1LosChambosTest/Opcion1LosChambosTest.csproj --no-build --verbosity normal
+      run: dotnet test Opcion1LosChambos/Opcion1LosChambosTest/Opcion1LosChambosTest.csproj --configuration Release --verbosity normal
