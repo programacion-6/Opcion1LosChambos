@@ -1,4 +1,5 @@
-﻿using LosChambos.Entities;
+﻿using LosChambos.DataLoader;
+using LosChambos.Entities;
 using LosChambos.Entities.Concretes;
 using LosChambos.UInterface.CommandInterface;
 using LosChambos.UInterface.ConcreteCommands.UserInterfaces;
@@ -18,6 +19,7 @@ public class UserInterface
     public UserInterface()
     {
         var library = new Library();
+        LocalData.LoadData(library);
         _bookUInterface = new BookUInterface(library);
         _patronUInterface = new PatronUInterface(library);
         _transactionUInterface = new BorrowingTransactionUInterface(library);
