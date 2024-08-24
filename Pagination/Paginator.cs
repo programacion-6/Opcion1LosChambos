@@ -25,7 +25,8 @@ public class Paginator<T>
 
             var choice = AnsiConsole.Prompt(
                 new SelectionPrompt<string>()
-                    .Title("Navigate:")
+                    .Title("[green]Navigate[/]:")
+                    .HighlightStyle("yellow")
                     .AddChoices(new[] { "Next", "Previous", "Exit" })
             );
 
@@ -47,7 +48,7 @@ public class Paginator<T>
 
     private void DisplayPage(int currentPage, int totalPages)
     {
-        AnsiConsole.MarkupLine($"[yellow]Page {currentPage}/{totalPages}[/]\n");
+        AnsiConsole.MarkupLine($"[bold blue]Page {currentPage}/{totalPages}[/]");
 
         var pageItems = _items
             .Skip((currentPage - 1) * _pageSize)
@@ -55,7 +56,10 @@ public class Paginator<T>
 
         foreach (var item in pageItems)
         {
-            AnsiConsole.MarkupLine(item?.ToString() ?? "Null item");
+            AnsiConsole.MarkupLine($"[cyan]{item?.ToString() ?? "[red]Null item[/]"}[/]");
+            AnsiConsole.MarkupLine("[grey]----[/]");
         }
+
+        AnsiConsole.MarkupLine($"[grey]Showing items {((currentPage - 1) * _pageSize) + 1}-{Math.Min(currentPage * _pageSize, _items.Count)} of {_items.Count}[/]");
     }
 }
