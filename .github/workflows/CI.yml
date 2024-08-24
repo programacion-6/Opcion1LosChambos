@@ -20,7 +20,10 @@ jobs:
         dotnet-version: '8.0.x' 
 
     - name: Restore dependencies
-      run: dotnet restore LosChambos.csproj
+      run: dotnet restore Opcion1LosChambos/Opcion1LosChambosApp/LosChambos.csproj
 
     - name: Build
-      run: dotnet build LosChambos.csproj --configuration Release --no-restore
+      run: dotnet build Opcion1LosChambos/Opcion1LosChambosApp/LosChambos.csproj --configuration Release --no-restore
+
+    - name: Test
+      run: dotnet test Opcion1LosChambos/Opcion1LosChambosTest/Opcion1LosChambosTest.csproj --no-build --verbosity normal
