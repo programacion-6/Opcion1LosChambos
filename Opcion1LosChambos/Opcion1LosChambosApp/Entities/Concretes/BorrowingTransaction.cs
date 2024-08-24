@@ -36,7 +36,6 @@ public class BorrowingTransaction : IEntity
     public override string ToString()
     {
         return $"Borrowing Transaction:"
-            + $"Id: {Id}\n"
             + $"Book: \t {Book}\n===================\n"
             + $"Patron: \t {Patron}\n===================\n"
             + $"Borrowed Date: {BorrowedDate:yyyy-MM-dd}\n"
