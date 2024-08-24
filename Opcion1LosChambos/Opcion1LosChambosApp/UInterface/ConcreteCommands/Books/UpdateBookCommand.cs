@@ -14,17 +14,14 @@ public class UpdateBookCommand : ICommand
 
     public void Execute()
     {
-        var id = UserInterface.GetUserInput("Enter Id of the book to update: ");
-        var book = _library.BookManager.Items.Find(b => b.Id == Guid.Parse(id));
+        var book = _library.BookManager.Items.Find(book => book.Id == TryParseId());
 
         if (book != null)
         {
             book.Title = UserInterface.GetUserInput("Enter new title: ");
             book.Author = UserInterface.GetUserInput("Enter new author: ");
             book.Genre = UserInterface.GetUserInput("Enter new genre: ");
-            book.PublicationYear = int.Parse(
-                UserInterface.GetUserInput("Enter new publication year: ")
-            );
+            book.PublicationYear = tryParsePublicationYear();
 
             bool success = _library.BookManager.Update(book);
             UserInterface.ShowMessage(
@@ -34,6 +31,32 @@ public class UpdateBookCommand : ICommand
         else
         {
             UserInterface.ShowMessage("Book not found.");
+        }
+    }
+
+    private Guid TryParseId()
+    {
+        if(Guid.TryParse(UserInterface.GetUserInput("Enter Id of the book to update: "), out Guid inputParsed))
+        {
+            return inputParsed;
+        }
+        else
+        {
+            UserInterface.ShowMessage("Enter a correct value.");
+            return TryParseId();
+        }
+    }
+
+    private int tryParsePublicationYear()
+    {
+        if(int.TryParse(UserInterface.GetUserInput("Enter new publication year: "), out int inputParsed))
+        {
+            return inputParsed;
+        }
+        else
+        {
+            UserInterface.ShowMessage("Enter a correct value.");
+            return tryParsePublicationYear();
         }
     }
 }

@@ -14,8 +14,7 @@ public class DeleteBookCommand : ICommand
 
     public void Execute()
     {
-        var id = UserInterface.GetUserInput("Enter Id of the book to delete: ");
-        var book = _library.BookManager.Items.Find(b => b.Id == Guid.Parse(id));
+        var book = _library.BookManager.Items.Find(b => b.Id == TryParseId());
 
         if (book != null)
         {
@@ -27,6 +26,19 @@ public class DeleteBookCommand : ICommand
         else
         {
             UserInterface.ShowMessage("Book not found.");
+        }
+    }
+
+    private Guid TryParseId()
+    {
+        if(Guid.TryParse(UserInterface.GetUserInput("Enter Id of the book to delete: "), out Guid inputParsed))
+        {
+            return inputParsed;
+        }
+        else
+        {
+            UserInterface.ShowMessage("Invalid Id Format");
+            return TryParseId();
         }
     }
 }

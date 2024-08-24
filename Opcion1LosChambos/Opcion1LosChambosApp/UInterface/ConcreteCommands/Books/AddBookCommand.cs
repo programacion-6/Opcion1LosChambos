@@ -19,11 +19,25 @@ public class AddBookCommand : ICommand
         var author = UserInterface.GetUserInput("Enter book author: ");
         var isbn = UserInterface.GetUserInput("Enter book ISBN: ");
         var genre = UserInterface.GetUserInput("Enter book genre: ");
-        var publicationYear = int.Parse(UserInterface.GetUserInput("Enter publication year: "));
+        
+        var publicationYear = TryParsePublicationYear();
 
         var book = new Book(title, author, isbn, genre, publicationYear);
 
         bool success = _library.BookManager.Add(book);
         UserInterface.ShowMessage(success ? "Book added successfully." : "Failed to add book.");
+    }
+
+    private int TryParsePublicationYear()
+    {
+        if(int.TryParse(UserInterface.GetUserInput("Enter publication year: "), out int inputParsed))
+        {
+            return inputParsed;
+        }
+        else
+        {
+           UserInterface.ShowMessage("Enter a correct value.");
+            return TryParsePublicationYear();
+        }
     }
 }

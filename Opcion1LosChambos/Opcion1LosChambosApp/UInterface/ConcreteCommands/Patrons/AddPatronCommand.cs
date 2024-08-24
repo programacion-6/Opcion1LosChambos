@@ -24,4 +24,17 @@ public class AddPatronCommand : ICommand
         bool success = _library.PatronManager.Add(patron);
         UserInterface.ShowMessage(success ? "Patron added successfully." : "Failed to add patron.");
     }
+
+    private int tryParseMembershipNumber()
+    {
+        if(int.TryParse(UserInterface.GetUserInput("Enter membership number: "), out int inputParsed))
+        {
+            return inputParsed;
+        }
+        else
+        {
+            UserInterface.ShowMessage("Enter a correct value.");
+            return tryParseMembershipNumber();
+        }
+    }
 }

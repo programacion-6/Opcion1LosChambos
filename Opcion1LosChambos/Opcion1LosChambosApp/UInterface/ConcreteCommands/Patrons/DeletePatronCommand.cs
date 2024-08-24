@@ -14,8 +14,7 @@ public class DeletePatronCommand : ICommand
 
     public void Execute()
     {
-        var id = UserInterface.GetUserInput("Enter Id number of the patron to delete: ");
-        var patron = _library.PatronManager.Items.Find(p => p.Id == Guid.Parse(id));
+        var patron = _library.PatronManager.Items.Find(patron => patron.Id == TryParseId());
 
         if (patron != null)
         {
@@ -27,6 +26,19 @@ public class DeletePatronCommand : ICommand
         else
         {
             UserInterface.ShowMessage("Patron not found.");
+        }
+    }
+
+    private Guid TryParseId()
+    {
+        if(Guid.TryParse(UserInterface.GetUserInput("Enter Id number of the patron to delete: "), out Guid inputParsed))
+        {
+            return inputParsed;
+        }
+        else
+        {
+            UserInterface.ShowMessage("Invalid Id format.");
+            return TryParseId();
         }
     }
 }

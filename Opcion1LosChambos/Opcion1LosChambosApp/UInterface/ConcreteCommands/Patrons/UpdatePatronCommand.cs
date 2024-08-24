@@ -14,8 +14,7 @@ public class UpdatePatronCommand : ICommand
 
     public void Execute()
     {
-        var id = UserInterface.GetUserInput("Enter Id of the patron to update: ");
-        var patron = _library.PatronManager.Items.Find(p => p.Id == Guid.Parse(id));
+        var patron = _library.PatronManager.Items.Find(patron => patron.Id == TryParseId());
 
         if (patron != null)
         {
@@ -30,6 +29,19 @@ public class UpdatePatronCommand : ICommand
         else
         {
             UserInterface.ShowMessage("Patron not found.");
+        }
+    }
+
+    private Guid TryParseId()
+    {
+        if(Guid.TryParse(UserInterface.GetUserInput("Enter Id of the patron to update: "), out Guid inputParsed))
+        {
+            return inputParsed;
+        }
+        else
+        {
+            UserInterface.ShowMessage("Invalid Id format.");
+            return TryParseId();
         }
     }
 }
