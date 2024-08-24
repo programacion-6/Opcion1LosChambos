@@ -44,6 +44,22 @@ public class SearchMenuUInterface<TEntity> : MenuUInterface
         UserInterface.DisplayListResult(results);
     }
 
+    public static void ShowSearchedDataWithoutPrompt<TCriteria>(
+        TCriteria criteria,
+        AManager<TEntity> manager
+    )
+        where TCriteria : ISearchCriteria<TEntity>
+    {
+        if (criteria == null)
+        {
+            UserInterface.ShowMessage("Invalid criteria format.");
+            return;
+        }
+
+        var results = manager.Search(criteria);
+        UserInterface.DisplayListResult(results);
+    }
+
     public static IEntity? ShowSearchedItemById(AManager<TEntity> manager, string titleInstruction)
     {
         var idInput = UserInterface.GetUserInput($"Enter {titleInstruction} ID: ");
