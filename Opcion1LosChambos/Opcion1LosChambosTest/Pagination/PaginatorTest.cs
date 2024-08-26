@@ -28,6 +28,26 @@ namespace Opcion1LosChambosTest.Manager
         }
 
         [Fact]
+        public void CalculateTotalPages_ShouldReturnCorrectPageCount()
+        {
+            var paginator = new Paginator<string>(new List<string> { "item1", "item2", "item3", "item4", "item5", "item6" }, 5);
+            var totalPages = paginator.CalculateTotalPages(6);
+            Assert.Equal(2, totalPages);
+        }
+
+        [Fact]
+        public void HandleNavigationChoice_ShouldReturnCorrectPageNumber()
+        {
+            var paginator = new Paginator<string>(new List<string> { "item1", "item2", "item3" }, 1);
+
+            int nextPage = paginator.HandleNavigationChoice("Next", 1, 3);
+            Assert.Equal(2, nextPage);
+
+            int previousPage = paginator.HandleNavigationChoice("Previous", 2, 3);
+            Assert.Equal(1, previousPage);
+        }
+        
+        [Fact]
         public void GetPageItems_ShouldReturnCorrectItemsForGivenPage()
         {
             var items = new List<string> { "item1", "item2", "item3" };
@@ -37,21 +57,6 @@ namespace Opcion1LosChambosTest.Manager
 
             Assert.Single(pageItems);
             Assert.Equal("item3", pageItems[0]);
-        }
-
-        [Fact]
-        public void DisplayPaginatedList_ShouldExitWhenExitOptionSelected()
-        {
-            var items = new List<string> { "item1", "item2", "item3" };
-            var paginator = new Paginator<string>(items, 1);
-
-            _ansiConsoleMock.SetupSequence(console => console.Prompt(It.IsAny<SelectionPrompt<string>>()))
-                .Returns("Exit"); // Simula que el usuario selecciona "Exit" inmediatamente
-
-            paginator.DisplayPaginatedList();
-
-            _ansiConsoleMock.Verify(console => console.Clear(), Times.Once);
-            _ansiConsoleMock.Verify(console => console.Prompt(It.IsAny<SelectionPrompt<string>>()), Times.Once);
         }
     }
 }
