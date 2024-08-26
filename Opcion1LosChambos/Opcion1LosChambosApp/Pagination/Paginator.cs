@@ -14,14 +14,32 @@ public class Paginator<T>
 
     public void DisplayPaginatedList()
     {
+        var (totalItems, totalPages, currentPage) = InitializePagination();
+
+        if (totalItems == 0)
+        {
+            AnsiConsole.MarkupLine("[yellow]No items to display.[/]");
+            return;
+        }
+
+        NavigatePages(totalPages, ref currentPage);
+    }
+
+    private (int totalItems, int totalPages, int currentPage) InitializePagination()
+    {
         int totalItems = _items.Count;
         int totalPages = CalculateTotalPages(totalItems);
         int currentPage = 1;
 
+        return (totalItems, totalPages, currentPage);
+    }
+
+    private void NavigatePages(int totalPages, ref int currentPage)
+    {
         while (true)
         {
             AnsiConsole.Clear();
-            DisplayPage(currentPage, totalPages);
+            DisplayCurrentPage(currentPage, totalPages);
 
             var choice = GetNavigationChoice();
             currentPage = HandleNavigationChoice(choice, currentPage, totalPages);
@@ -31,25 +49,52 @@ public class Paginator<T>
         }
     }
 
-    private int CalculateTotalPages(int totalItems)
+    private void DisplayCurrentPage(int currentPage, int totalPages)
     {
-        return (int)Math.Ceiling(totalItems / (double)_pageSize);
+        DisplayPage(currentPage, totalPages);
     }
 
-    private void DisplayPage(int currentPage, int totalPages)
+    public void DisplayPage(int currentPage, int totalPages)
+    {
+        ValidateCurrentPage(currentPage, totalPages);
+        DisplayPageHeader(currentPage, totalPages);
+        DisplayPageItems(currentPage);
+        DisplayPageFooter(currentPage);
+    }
+
+    private void ValidateCurrentPage(int currentPage, int totalPages)
+    {
+        if (currentPage < 1 || currentPage > totalPages)
+        {
+            throw new ArgumentOutOfRangeException(nameof(currentPage), "Current page is out of range.");
+        }
+    }
+
+    private void DisplayPageHeader(int currentPage, int totalPages)
     {
         AnsiConsole.MarkupLine($"[bold blue]Page {currentPage}/{totalPages}[/]");
-        var pageItems = GetPageItems(currentPage);
+    }
 
+    private void DisplayPageItems(int currentPage)
+    {
+        var pageItems = GetPageItems(currentPage);
         foreach (var item in pageItems)
         {
             DisplayItem(item);
         }
+    }
 
+    private void DisplayPageFooter(int currentPage)
+    {
         DisplayPageSummary(currentPage);
     }
 
-    private IEnumerable<T> GetPageItems(int currentPage)
+    public int CalculateTotalPages(int totalItems)
+    {
+        return (int)Math.Ceiling(totalItems / (double)_pageSize);
+    }
+
+    public IEnumerable<T> GetPageItems(int currentPage)
     {
         return _items.Skip((currentPage - 1) * _pageSize).Take(_pageSize);
     }
@@ -77,7 +122,7 @@ public class Paginator<T>
         );
     }
 
-    private int HandleNavigationChoice(string choice, int currentPage, int totalPages)
+    public int HandleNavigationChoice(string choice, int currentPage, int totalPages)
     {
         switch (choice)
         {
