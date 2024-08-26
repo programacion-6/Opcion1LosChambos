@@ -49,7 +49,7 @@ public class Paginator<T>
         DisplayPageSummary(currentPage);
     }
 
-    private IEnumerable<T> GetPageItems(int currentPage)
+    public IEnumerable<T> GetPageItems(int currentPage)
     {
         return _items.Skip((currentPage - 1) * _pageSize).Take(_pageSize);
     }
