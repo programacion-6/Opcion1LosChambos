@@ -10,46 +10,49 @@ package "SearchCriteria" {
 
     class TitleSearchCriteria implements ISearchCriteria {
         +String title
+        +TitleSearchCriteria(string title)
         +matches(book: Book): boolean
     }
 
     class AuthorSearchCriteria implements ISearchCriteria {
         +String author
+        +AuthorSearchCriteria(string author)
         +matches(book: Book): boolean
     }
 
     class ISBNSearchCriteria implements ISearchCriteria {
         +String ISBN
+        +ISBNSearchCriteria(string isbn)
         +matches(book: Book): boolean
     }
 
     class NameSearchCriteria implements ISearchCriteria {
         +String name
+        +NameSearchCriteria(string name)
         +matches(patron: Patron): boolean
     }
 
     class MembershipNumberSearchCriteria implements ISearchCriteria {
         +int membershipNumber
+        +MembershipNumberSearchCriteria(int membershipNumber)
         +matches(patron: Patron): boolean
-    }
-
-    class OverDueBooksSearchCriteria implements ISearchCriteria {
-        +Patron patron
-        +matches(transaction: BorrowingTransaction): boolean
     }
 
     class CurrentlyBorrowedBooksSearchCriteria implements ISearchCriteria {
         +Patron patron
+        +CurrentlyBorrowedBooksSearchCriteria(Patron patron)
         +matches(transaction: BorrowingTransaction): boolean
     }
 
     class PatronBorrowingHistorySearchCriteria implements ISearchCriteria {
         +Patron patron
+        +PatronBorrowingHistorySearchCriteria(Patron patron)
         +matches(transaction: BorrowingTransaction): boolean
     }
 
     class OverdueBorrowedBooksSearchCriteria implements ISearchCriteria {
         +Patron patron
+        +OverdueBorrowedBooksSearchCriteria(Patron patron)
         +matches(transaction: BorrowingTransaction): boolean
     }
 }
@@ -63,23 +66,23 @@ package "Validators" {
     }
 
     class BookValidator implements Validator {
-        +validate(book: Book): boolean
+        +override InitializeValidations(): void
     }
 
     class PatronValidator implements Validator {
-        +validate(patron: Patron): boolean
+        +override InitializeValidations(): void
     }
 
     class BorrowingTransactionValidator implements Validator {
-        +validate(transaction: BorrowingTransaction): boolean
+        +override InitializeValidations(): void
     }
 
     class ReservationValidator implements Validator {
-        +validate(reservation: Reservation): boolean
+        +override InitializeValidations(): void
     }
 
     class FineValidator implements Validator {
-        +validate(fine: Fine): boolean
+        +override InitializeValidations(): void
     }
 }
 
@@ -95,6 +98,7 @@ package "Entities" {
         -String ISBN
         -String genre
         -int publicationYear
+        +override ToString(): string
     }
 
     class Patron implements IEntity {
@@ -105,6 +109,7 @@ package "Entities" {
 
         +borrowBook(book: Book): void
         +returnBook(book: Book): void
+        +override ToString(): string
     }
 
     class BorrowingTransaction implements IEntity {
@@ -118,6 +123,7 @@ package "Entities" {
         -boolean returned
         +borrowBook(): void
         +returnBook(): void
+        +override ToString(): string
         ' +calculateFine(): Fine'
     }
 
@@ -130,6 +136,7 @@ package "Entities" {
         -boolean paid
 
         +payFine(): void;
+        +override ToString(): string
     }
 
     class Reservation implements IEntity {
@@ -143,6 +150,7 @@ package "Entities" {
 
         +isAvailable(): boolean
         +cancel(): void
+        +override ToString(): string
     }
 }
 
@@ -150,7 +158,6 @@ package "Managers" {
     abstract class AManager<T> {
         #List<T> items
         #Validator<T> validator
-        #ErrorHandler errorHandler
 
         +add(item: T): boolean
         +abstract update(item: T): boolean
@@ -170,11 +177,9 @@ package "Managers" {
         +update(transaction: BorrowingTransaction): boolean
     }
 
-    class ReservationManager extends AManager {
-        +update(reservation: Reservation): boolean
-    }
-
     class FineManager extends AManager {
+        -double FinePerDay
+        -double FineLimit
         +update(fine: Fine): boolean
         +payFine(fine: Fine): boolean
         +calculateFine(transaction: BorrowingTransaction): Fine;
@@ -191,14 +196,11 @@ package "Managers" {
 }
 
 class Library {
-    -IManager<Book> bookManager
-    -IManager<Patron> patronManager
-    -IManager<BorrowingTransaction> transactionsManager
-    -IManager<Reservations> reservationManager
+    -AManager<Book> bookManager
+    -AManager<Patron> patronManager
+    -AManager<BorrowingTransaction> transactionsManager
     -FineManager fineManager
-    -Statistics statistics
-
-    +checkAvailabilityToBorrowBook(book: Book): boolean
+    +Library()
 }
 
 class ErrorHandler {
@@ -212,54 +214,47 @@ package "UInterface" {
         -BorrowingTransactionUInterface _transactionUInterface
         -MainMenuUInterface _mainMenuUInterface
 
-        +UserInterface()
         +void HandleUserInput()
         +static string GetUserInput(string prompt)
         +static void ShowMessage(string message)
         +static void DisplayListResult<T>(IEnumerable<T> results)
+        +static DisplaySelectableListResult<T>(IEnumerable<T> choices)
     }
 
     abstract class BaseUInterface<T> {
-        protected -Library library
-        protected -SearchMenuUInterface<T> _searchInterface
-        public +MainMenuUInterface _menu
-        protected -string _menuTitle
+        - protected Library library
+        - protected SearchMenuUInterface<T> _searchInterface
+        - public MainMenuUInterface _menu
+        - protected string _menuTitle
 
         +BaseUInterface(Library library, string menuTitle)
-        protected abstract SearchMenuUInterface<T> CreateSearchInterface()
-        protected abstract MainMenuUInterface CreateMainMenuInterface()
+        +protected abstract SearchMenuUInterface<T> CreateSearchInterface()
+        +protected abstract MainMenuUInterface CreateMainMenuInterface()
     }
 
     class PatronUInterface extends BaseUInterface {
         +PatronUInterface(Library library)
-        protected +SearchMenuUInterface<Patron> CreateSearchInterface()
-        protected +MainMenuUInterface CreateMainMenuInterface()
+        +protected SearchMenuUInterface<Patron> CreateSearchInterface()
+        +protected MainMenuUInterface CreateMainMenuInterface()
     }
 
     class BorrowingTransactionUInterface extends BaseUInterface {
         +BorrowingTransactionUInterface(Library library)
-        protected +SearchMenuUInterface<BorrowingTransaction> CreateSearchInterface()
-        protected +MainMenuUInterface CreateMainMenuInterface()
-        /' -void BorrowBook()
-        -void ReturnBook() '/
-        -Book? GetBookFromUser()
-        -Patron? GetPatronFromUser()
-        -Patron? GetPatronFromUser(patronId: string)
-        /' -void SearchCurrentlyBorrowedTransactions()
-        -void SearchBorrowingTransactionsHistory()
-        -void SearchOverdueBorrowedTransactions(); '/
+        +protected SearchMenuUInterface<BorrowingTransaction> CreateSearchInterface()
+        +protected MainMenuUInterface CreateMainMenuInterface()
     }
 
     class BookUInterface extends BaseUInterface {
         +BookUInterface(Library library)
-        protected +SearchMenuUInterface<Book> CreateSearchInterface()
-        protected +MainMenuUInterface CreateMainMenuInterface()
+        +protected SearchMenuUInterface<Book> CreateSearchInterface()
+        +protected MainMenuUInterface CreateMainMenuInterface()
     }
 
     class SearchMenuUInterface<T> extends MenuUInterface {
         +SearchMenuUInterface(Dictionary<string, ICommand> searchActions, List<string> searchLabels, string searchForTitle, AManager<T> manager)
         +static void ShowSearchedData<TCriteria>(string inputPrompt, Func<string, TCriteria?> createCriteria, AManager<T> manager)
         +static IEntity? ShowSearchedItemById(AManager<T> manager, string titleInstruction)
+        +static void ShowSearchedDataWithoutPrompt<TCriteria>(TCriteria criteria,AManager<TEntity> manager)
     }
 
     class MenuUInterface {
@@ -268,7 +263,7 @@ package "UInterface" {
         #string _menuInstruction
 
         #MenuUInterface(Dictionary<string, ICommand> actions, List<string> labels, string menuInstruction)
-        -void DisplayMenu()
+        +void DisplayMenu()
         +void HandleMenu()
     }
 
@@ -285,85 +280,144 @@ package "UInterface.Command" {
     class SearchEntityByIdCommand<T> implements ICommand {
         -string _searchForTitle;
         -AManager<T> _manager;
+        +SearchEntityByIdCommand(string searchForTitle,AManager<TEntity> manager)
+        +void Execute()
     }
 }
 
 package "UInterface.Command.Books" {
     class AddBookCommand implements ICommand {
         -Library _library
+        +AddBookCommand(Library library)
+        +Execute(): void
+        +TryParsePublicationYear(): int
     }
 
     class DeleteBookCommand implements ICommand {
         -Library _library
+        +DeleteBookCommand(Library library)
+        +Execute(): void
     }
 
     class UpdateBookCommand implements ICommand {
         -Library _library
+        +UpdateBookCommand(Library library)
+        +Execute(): void
+        +tryParsePublicationYear(): int
     }
 }
 
 package "UInterface.Command.Books.Search" {
     class SearchBookByAuthorCommand implements ICommand {
         -Library _library
+        +SearchBookByAuthorCommand(Library library)
+        +Execute(): void
     }
 
     class SearchBookByISBNCommand implements ICommand {
         -Library _library
+        +SearchBookByISBNCommand(Library library)
+        +Execute(): void
     }
 
     class SearchBookByTitleCommand implements ICommand {
         -Library _library
+        +SearchBookByTitleCommand(Library library)
+        +Execute(): void
     }
 }
 
 package "UInterface.Command.Patron" {
     class AddPatronCommand implements ICommand {
         -Library _library
+        +AddPatronCommand(Library library)
+        +Execute(): void
+        +TryParseMembershipNumber(): int
     }
 
     class DeletePatronCommand implements ICommand {
         -Library _library
+        +DeletePatronCommand(Library library)
+        +Execute(): void
     }
 
     class UpdatePatronCommand implements ICommand {
         -Library _library
+        +UpdatePatronCommand(Library library)
+        +Execute(): void
     }
 }
 
 package "UInterface.Command.Patron.Search" {
     class SearchPatronByMembershipNumberCommand implements ICommand {
         -Library _library
+        +SearchPatronByMembershipNumberCommand(Library library)
+        +Execute(): void
     }
 
     class SearchPatronByNameCommand implements ICommand {
         -Library _library
+        +SearchPatronByNameCommand(Library library)
+        +Execute(): void
     }
 }
 
 package "UInterface.Command.BorrowingTransactions" {
     class BorrowBookCommand implements ICommand {
         -Library _library
+        +BorrowBookCommand(Library library)
+        +Execute(): void
+        +GetBookFromUser(): Book?
+        +GetPatronFromUser(): Patron?
     }
 
     class ReturnBookCommand implements ICommand {
         -Library _library
+        +ReturnBookCommand(Library library)
+        +Execute(): void
     }
 }
 
 package "UInterface.Command.BorrowingTransactions.Search" {
     class SearchBorrowedTransactionsHistoryCommand implements ICommand {
         -Library _library
+        +SearchBorrowedTransactionsHistoryCommand(Library library)
+        +Execute(): void
     }
 
     class SearchCurrentlyBorrowedTransactionsCommand implements ICommand {
         -Library _library
+        +SearchCurrentlyBorrowedTransactionsCommand(Library library)
+        +Execute(): void
     }
 
     class SearchOverdueBorrowedTransactionsCommand implements ICommand {
         -Library _library
+        +SearchOverdueBorrowedTransactionsCommand(Library library)
+        +Execute(): void
     }
 }
-
+package "Pagination"{
+    class Paginator{
+        -List<T> _items
+        -int _pageSize
+        +Paginator(List<T> items, int pageSize )
+        +DisplayPaginatedList(): void
+        +NavigatePages(int totalPages, ref int currentPage): void
+        +DisplayCurrentPage(int currentPage, int totalPages): void
+        +DisplayPage(int currentPage, int totalPages): void
+        +ValidateCurrentPage(int currentPage, int totalPages): void
+        +DisplayPageHeader(int currentPage, int totalPages): void
+        +DisplayPageItems(int currentPage): void
+        +DisplayPageFooter(int currentPage): void
+        +CalculateTotalPages(int totalItems): int
+        +GetPageItems(int currentPage): IEnumerable<T>
+        +DisplayItem(T item): void
+        +DisplayPageSummary(int currentPage): void
+        +GetNavigationChoice(): string
+        +HandleNavigationChoice(string choice, int currentPage, int totalPages): int
+    }
+}
 
 SearchMenuUInterface *-- SearchEntityByIdCommand
 
@@ -410,7 +464,6 @@ Library *-- AManager : has
 Library *-- BookManager : has
 Library *-- PatronManager : has
 Library *-- BorrowingTransactionsManager : has
-Library *-- ReservationManager : has
 Library *-- FineManager : has
 Library *-- Statistics : has
 
@@ -421,8 +474,10 @@ AManager *-- ISearchCriteria : uses
 BookManager *-- BookValidator : uses
 PatronManager *-- PatronValidator : uses
 BorrowingTransactionsManager *-- BorrowingTransactionValidator : uses
-ReservationManager *-- ReservationValidator : uses
 FineManager *-- FineValidator : uses
+
+UserInterface *-- Paginator : uses
+
 
 BorrowingTransaction *-- Book : involves
 BorrowingTransaction *-- Patron : involves
@@ -430,11 +485,9 @@ BorrowingTransaction *-- Patron : involves
 BookManager o-- Book : manages
 PatronManager o-- Patron : manages
 BorrowingTransactionsManager o-- BorrowingTransaction : manages
-ReservationManager o-- Reservation : manages
 FineManager o-- Fine : manages
 Statistics o-- BorrowingTransaction : analyzes
 
 UserInterface *-- Library : interacts
-' UserInterface -> ErrorHandler : uses
 
 @enduml
