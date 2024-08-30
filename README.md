@@ -26,6 +26,7 @@ __Team members__:
 __Workspace__
 
 - Dashboard in [Trello](https://trello.com/b/qMeRJiYW/los-cules)
+- LosCules Wiki: [Wiki](https://github.com/programacion-6/Opcion1LosChambos/wiki)
 
 __Docs__
 
