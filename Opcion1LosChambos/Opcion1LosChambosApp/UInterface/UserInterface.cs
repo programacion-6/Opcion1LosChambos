@@ -7,6 +7,7 @@ using LosChambos.UInterface.ConcreteCommands.UserInterfaces;
 using LosChambos.UInterface.Menu;
 using Spectre.Console;
 
+
 namespace LosChambos.UInterface;
 
 public class UserInterface
@@ -15,12 +16,16 @@ public class UserInterface
     private readonly PatronUInterface _patronUInterface;
     private readonly BorrowingTransactionUInterface _transactionUInterface;
 
+    private readonly LocalData _localData;
+
     private readonly MainMenuUInterface _mainMenuUInterface;
 
     public UserInterface()
     {
         var library = new Library();
-        LocalData.LoadData(library);
+        var bookStorage = new FileStorage<Book>("DataLoader/Books.json");
+        var patronStorage = new FileStorage<Patron>("DataLoader/Patrons.json");
+        _localData = new LocalData(patronStorage, bookStorage, library);
         _bookUInterface = new BookUInterface(library);
         _patronUInterface = new PatronUInterface(library);
         _transactionUInterface = new BorrowingTransactionUInterface(library);

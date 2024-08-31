@@ -1,3 +1,4 @@
+using LosChambos.DataLoader;
 using LosChambos.Entities;
 using LosChambos.UInterface.CommandInterface;
 
@@ -24,6 +25,7 @@ public class UpdateBookCommand : ICommand
             book.PublicationYear = tryParsePublicationYear();
 
             bool success = _library.BookManager.Update(book);
+            LocalData.SaveBooksToJson(_library.BookManager.Items);
             UserInterface.ShowMessage(
                 success ? "Book updated successfully." : "Failed to update book."
             );
