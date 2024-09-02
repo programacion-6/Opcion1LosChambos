@@ -45,9 +45,9 @@ public class LocalData
                     bookValidator.Validate(book);
                     _books.Add(book);
                 }
-                catch (ValidationException ex)
+                catch (ValidationException)
                 {
-                    Console.WriteLine($"Skipping invalid book: {ex.Message}");
+                    
                 }
         }      
         }
