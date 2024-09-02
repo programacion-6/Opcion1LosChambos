@@ -36,6 +36,7 @@ public class LocalData
         var booksFromJson = _storageBook.Load();
         if (booksFromJson != null)
         {
+            _books.AddRange(booksFromJson);
             var bookValidator = new BookValidator();
 
             foreach (var book in booksFromJson)
@@ -49,7 +50,7 @@ public class LocalData
                 {
                     
                 }
-        }      
+            }      
         }
     }
 
