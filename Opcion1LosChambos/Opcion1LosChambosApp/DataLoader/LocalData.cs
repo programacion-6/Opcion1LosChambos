@@ -3,6 +3,8 @@ using LosChambos.Entities.Concretes;
 namespace LosChambos.DataLoader;
 using System.Collections.Generic;
 using LosChambos.Entities;
+using LosChambos.Validators.Concretes;
+using LosChambos.ErrorHandling.Exceptions;
 
 public class LocalData
 {
@@ -35,6 +37,20 @@ public class LocalData
         if (booksFromJson != null)
         {
             _books.AddRange(booksFromJson);
+            var bookValidator = new BookValidator();
+
+            foreach (var book in booksFromJson)
+            {
+                try
+                {
+                    bookValidator.Validate(book);
+                    _books.Add(book);
+                }
+                catch (ValidationException)
+                {
+                    
+                }
+            }      
         }
     }
 

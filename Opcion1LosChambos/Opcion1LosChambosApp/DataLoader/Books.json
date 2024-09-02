@@ -1,6 +1,6 @@
 [
   {
-    "Id": "9f158cf0-4ef2-4836-b992-ef994addd766",
+    "Id": "5f28c397-0fe2-47d1-a20b-006f7da13581",
     "Title": "To Kill a Mockingbird",
     "Author": "Harper Lee",
     "ISBN": "2001",
@@ -8,15 +8,7 @@
     "PublicationYear": 1960
   },
   {
-    "Id": "2414be94-e4d4-41c2-b06d-c64bb0915cc5",
-    "Title": "454687",
-    "Author": "d",
-    "ISBN": "2002",
-    "Genre": "d",
-    "PublicationYear": 54
-  },
-  {
-    "Id": "83abbab5-c736-4abe-8afa-9b825f5815eb",
+    "Id": "c26d0b27-22f9-4771-904f-74c433631e58",
     "Title": "Moby Dick",
     "Author": "Herman Melville",
     "ISBN": "2003",
@@ -24,7 +16,7 @@
     "PublicationYear": 1851
   },
   {
-    "Id": "b84d63ad-43cc-48c2-8b64-3f26abb5b94e",
+    "Id": "07e53608-9a8b-43c7-95c1-6fa54d2d39a5",
     "Title": "Pride and Prejudice",
     "Author": "Jane Austen",
     "ISBN": "2004",
@@ -32,15 +24,7 @@
     "PublicationYear": 1813
   },
   {
-    "Id": "7d3f0039-751a-4b49-9fe1-8daf384baaa8",
-    "Title": "The Great Gatsby",
-    "Author": "F. Scott Fitzgerald",
-    "ISBN": "2005",
-    "Genre": "Fiction",
-    "PublicationYear": 1925
-  },
-  {
-    "Id": "bae16d49-2b83-4325-98f7-10a408e417db",
+    "Id": "de8e4cdf-a0df-43dc-9aa6-e6b6d0b3fee5",
     "Title": "War and Peace",
     "Author": "Leo Tolstoy",
     "ISBN": "2006",
@@ -48,23 +32,7 @@
     "PublicationYear": 1869
   },
   {
-    "Id": "26cf0b37-3fa5-4c60-9560-6f2d6646761b",
-    "Title": "The Catcher in the Rye",
-    "Author": "J.D. Salinger",
-    "ISBN": "2007",
-    "Genre": "Fiction",
-    "PublicationYear": 1951
-  },
-  {
-    "Id": "7e6122b9-1a31-45f8-895f-f247cb698b6f",
-    "Title": "The Hobbit",
-    "Author": "J.R.R. Tolkien",
-    "ISBN": "2008",
-    "Genre": "Fantasy",
-    "PublicationYear": 1937
-  },
-  {
-    "Id": "3b5819f4-5d80-4061-844c-eaa1d0f174d5",
+    "Id": "96689933-4000-410f-a1cc-94575af6bb4b",
     "Title": "Crime and Punishment",
     "Author": "Fyodor Dostoevsky",
     "ISBN": "2009",
@@ -72,19 +40,11 @@
     "PublicationYear": 1866
   },
   {
-    "Id": "8d0f90f5-65e8-4de8-bc9e-0b7bd8ce0d52",
+    "Id": "d5d546eb-58b4-458f-b5b6-3e379e1b5b85",
     "Title": "odyssey",
     "Author": "homer",
     "ISBN": "2010",
     "Genre": "genre",
     "PublicationYear": 1900
-  },
-  {
-    "Id": "51db7df5-95c1-4549-9c26-bbd572deac2c",
-    "Title": "d",
-    "Author": "d",
-    "ISBN": "f",
-    "Genre": "d",
-    "PublicationYear": 54
   }
 ]
