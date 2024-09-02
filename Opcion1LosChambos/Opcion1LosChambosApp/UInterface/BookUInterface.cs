@@ -40,6 +40,7 @@ public class BookUInterface : BaseUInterface<Book>
             { "2", new DeleteBookCommand(_library) },
             { "3", new UpdateBookCommand(_library) },
             { "4", new SearchMenuCommand(_searchInterface) },
+            { "5", new ListBooksCommand(_library) },
         };
 
         var menuLabels = new List<string>
@@ -47,7 +48,8 @@ public class BookUInterface : BaseUInterface<Book>
             "Add Book",
             "Delete Book",
             "Update Book",
-            "Search Book"
+            "Search Book",
+            "List all Books"
         };
 
         return new MainMenuUInterface(menuCommands, menuLabels, _menuTitle);
