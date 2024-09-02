@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using LosChambos.Entities.Concretes;
 using LosChambos.ErrorHandling;
 using LosChambos.ErrorHandling.Exceptions;
@@ -28,6 +29,7 @@ public class BorrowingTransactionsManager : AManager<BorrowingTransaction>
                 existingTransaction.ReturnedDate = transaction.ReturnedDate;
                 existingTransaction.Fine = transaction.Fine;
                 existingTransaction.Returned = transaction.Returned;
+                Items.Remove(existingTransaction);
                 return true;
             }
         }

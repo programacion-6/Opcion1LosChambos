@@ -32,23 +32,26 @@ public class BorrowBookCommand : ICommand
             UserInterface.ShowMessage("Invalid date");
             return;
         }
+
+        var borrowedDate = DateTime.Now;
+
+        if (borrowedDate > resultDueDate)
+        {
+            UserInterface.ShowMessage("The due date must be after or equal to the borrow date.");
+            return;
+        }
+
         var transaction = new BorrowingTransaction(book, patron, resultDueDate);
 
-        if (
-            !_library.BorrowingTransactionsManager.Items.Any(transaction =>
-                transaction.Book.Id == book.Id && !transaction.Returned
-            )
-        )
+        if (!_library.BorrowingTransactionsManager.Items.Any(t => t.Book.Id == book.Id && !t.Returned))
         {
             bool success = _library.BorrowingTransactionsManager.Add(transaction);
 
-            UserInterface.ShowMessage(
-                success ? "Book borrowed successfully." : "Failed to borrow book."
-            );
-        } else {
-            UserInterface.ShowMessage(
-                "Failed. Book is currently borrowed."
-            );
+            UserInterface.ShowMessage(success ? "Book borrowed successfully." : "Failed to borrow book.");
+        }
+        else
+        {
+            UserInterface.ShowMessage("Failed. Book is currently borrowed.");
         }
     }
 

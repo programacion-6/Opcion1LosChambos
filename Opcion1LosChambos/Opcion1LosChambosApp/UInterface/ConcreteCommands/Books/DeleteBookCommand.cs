@@ -1,3 +1,4 @@
+using LosChambos.DataLoader;
 using LosChambos.Entities;
 using LosChambos.UInterface.CommandInterface;
 
@@ -19,6 +20,7 @@ public class DeleteBookCommand : ICommand
         if (book != null)
         {
             bool success = _library.BookManager.Remove(book);
+            LocalData.SaveBooksToJson(_library.BookManager.Items);
             UserInterface.ShowMessage(
                 success ? "Book deleted successfully." : "Failed to delete book."
             );

@@ -1,3 +1,4 @@
+using LosChambos.DataLoader;
 using LosChambos.Entities;
 using LosChambos.UInterface.CommandInterface;
 
@@ -22,6 +23,7 @@ public class UpdatePatronCommand : ICommand
             patron.ContactDetails = UserInterface.GetUserInput("Enter new contact details: ");
 
             bool success = _library.PatronManager.Update(patron);
+            LocalData.SavePatronsToJson(_library.PatronManager.Items);
             UserInterface.ShowMessage(
                 success ? "Patron updated successfully." : "Failed to update patron."
             );

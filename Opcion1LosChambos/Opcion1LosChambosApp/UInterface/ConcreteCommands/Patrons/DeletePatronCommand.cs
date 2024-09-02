@@ -1,3 +1,4 @@
+using LosChambos.DataLoader;
 using LosChambos.Entities;
 using LosChambos.UInterface.CommandInterface;
 
@@ -19,6 +20,7 @@ public class DeletePatronCommand : ICommand
         if (patron != null)
         {
             bool success = _library.PatronManager.Remove(patron);
+            LocalData.SavePatronsToJson(_library.PatronManager.Items);
             UserInterface.ShowMessage(
                 success ? "Patron deleted successfully." : "Failed to delete patron."
             );

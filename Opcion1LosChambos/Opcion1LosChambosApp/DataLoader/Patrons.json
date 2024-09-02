@@ -1,0 +1,56 @@
+[
+  {
+    "Id": "d803ebc9-4c92-4291-8d45-00db43119802",
+    "Name": "john ",
+    "MembershipNumber": 1001,
+    "ContactDetails": "doe@gmail.com"
+  },
+  {
+    "Id": "335f097e-f5e8-4a2a-b3d5-97b5517974b9",
+    "Name": "Alice Johnson",
+    "MembershipNumber": 1003,
+    "ContactDetails": "alice.johnson@example.com"
+  },
+  {
+    "Id": "8bbcc0c6-68d1-4b33-8e5b-273c9529cd96",
+    "Name": "Bob Brown",
+    "MembershipNumber": 1004,
+    "ContactDetails": "bob.brown@example.com"
+  },
+  {
+    "Id": "82d4bc0f-00f0-4c60-8be2-ccc0ac261e0d",
+    "Name": "Charlie Davis",
+    "MembershipNumber": 1005,
+    "ContactDetails": "charlie.davis@example.com"
+  },
+  {
+    "Id": "51fbac44-8b22-4fad-b9b9-aca05a4859eb",
+    "Name": "Emily White",
+    "MembershipNumber": 1006,
+    "ContactDetails": "emily.white@example.com"
+  },
+  {
+    "Id": "3e222b3b-3955-4559-8464-6361eb884f7d",
+    "Name": "David Green",
+    "MembershipNumber": 1007,
+    "ContactDetails": "david.green@example.com"
+  },
+  {
+    "Id": "4c666988-7313-4d54-8286-15d13ec738a4",
+    "Name": "Sarah Wilson",
+    "MembershipNumber": 1008,
+    "ContactDetails": "sarah.wilson@example.com"
+  },
+  {
+    "Id": "e3e5872f-dbf8-4789-b219-d3e860d9eb2c",
+    "Name": "Michael Scott",
+    "MembershipNumber": 1009,
+    "ContactDetails": "michael.scott@example.com"
+  },
+  {
+    "Id": "422a535e-6c54-4796-8395-73bb83c72b94",
+    "Name": "Laura Parker",
+    "MembershipNumber": 1010,
+    "ContactDetails": "laura.parker100@example.com"
+  }
+]
