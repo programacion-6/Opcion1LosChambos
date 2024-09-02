@@ -1,4 +1,5 @@
 ﻿using LosChambos.ErrorHandling.Exceptions;
+using LosChambos.UInterface;
 
 namespace LosChambos.Validators;
 
@@ -8,7 +9,7 @@ public abstract class Validator<T>
 
     protected Validator()
     {
-        Validations = [];
+        Validations = new Dictionary<string, Func<T, bool>>();
         InitializeValidations();
     }
 
@@ -16,13 +17,16 @@ public abstract class Validator<T>
 
     public bool Validate(T item)
     {
+        bool isValid = true;
+
         foreach (var validation in Validations)
         {
             if (!validation.Value(item))
             {
-                throw new ValidationException(validation.Key);
+                isValid = false;
             }
         }
-        return true;
+
+        return isValid;
     }
 }
