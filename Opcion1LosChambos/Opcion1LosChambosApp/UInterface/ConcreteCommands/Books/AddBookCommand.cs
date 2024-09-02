@@ -28,6 +28,7 @@ public class AddBookCommand : ICommand
 
         var book = new Book(title, author, isbn, genre, publicationYear);
         bool success = _library.BookManager.Add(book);
+        LocalData.SaveBooksToJson(_library.BookManager.Items);
         UserInterface.ShowMessage(success ? "Book added successfully." : "Failed to add book.");
     }
 
