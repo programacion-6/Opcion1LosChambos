@@ -14,26 +14,33 @@ public class ReturnBookCommand : ICommand
 
     public void Execute()
     {
-        var transaction = UserInterface.DisplaySelectableListResult(
-            _library.BorrowingTransactionsManager.Items
-        );
-
-        if (transaction == null)
+        if (_library.BorrowingTransactionsManager.Items.Count > 0)
         {
-            UserInterface.ShowMessage("Transaction not found.");
-            return;
-        }
-        else
-        {
-            transaction.ReturnBook();
-            bool success = _library.BorrowingTransactionsManager.Update(transaction);
-
-            UserInterface.ShowMessage(
-                success ? "Book returned successfully." : "Failed to return book."
+            var transaction = UserInterface.DisplaySelectableListResult(
+                _library.BorrowingTransactionsManager.Items
             );
+            if (transaction == null)
+            {
+                UserInterface.ShowMessage("Transaction not found.");
+                return;
+            }
+            else
+            {
+                transaction.ReturnBook();
+                bool success = _library.BorrowingTransactionsManager.Update(transaction);
 
-            _library.FineManager.CalculateFine(transaction);
-            UserInterface.ShowMessage(transaction.ToString() ?? "Transaction not found.");
+                UserInterface.ShowMessage(
+                    success ? "Book returned successfully." : "Failed to return book."
+                );
+
+                _library.FineManager.CalculateFine(transaction);
+                UserInterface.ShowMessage(transaction.ToString() ?? "Transaction not found.");
+            }
+        }
+        else 
+        {
+            UserInterface.ShowMessage("Transactions not found.");
+            return;
         }
     }
 }
