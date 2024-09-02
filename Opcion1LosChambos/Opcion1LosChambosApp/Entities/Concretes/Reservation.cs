@@ -3,41 +3,67 @@ namespace LosChambos.Entities.Concretes;
 public class Reservation : IEntity
 {
     public Guid Id { get; }
-    public Patron Patron { get; set; }
-    public Book Book { get; set; }
-    public DateTime ReservationDate { get; set; }
-    public DateTime ExpiryDate { get; set; }
-    public bool Canceled { get; set; }
-    public DateTime? CanceledDate { get; set; }
+
+    private Patron _patron;
+    private Book _book;
+    private DateTime _reservationDate;
+    private DateTime _expiryDate;
+    private bool _canceled;
+    private DateTime? _canceledDate;
 
     public Reservation(Patron patron, Book book, DateTime expiryDate)
     {
         Id = Guid.NewGuid();
-        Patron = patron;
-        Book = book;
-        ReservationDate = DateTime.Now;
-        ExpiryDate = expiryDate;
+        _patron = patron;
+        _book = book;
+        _reservationDate = DateTime.Now;
+        _expiryDate = expiryDate;
+        _canceled = false;
+    }
+
+    public DateTime ReservationDate
+    {
+        get => _reservationDate;
+        set => _reservationDate = value;
+    }
+
+    public DateTime ExpiryDate
+    {
+        get => _expiryDate;
+        set => _expiryDate = value;
+    }
+
+    public bool Canceled
+    {
+        get => _canceled;
+        set => _canceled = value;
+    }
+
+    public DateTime? CanceledDate
+    {
+        get => _canceledDate;
+        set => _canceledDate = value;
     }
 
     public bool IsAvailable()
     {
-        return !Canceled && DateTime.Now <= ExpiryDate;
+        return !_canceled && DateTime.Now <= _expiryDate;
     }
 
     public void Cancel()
     {
-        Canceled = true;
-        CanceledDate = DateTime.Now;
+        _canceled = true;
+        _canceledDate = DateTime.Now;
     }
 
     public override string ToString()
     {
         return $"Reservation:\n"
-            + $"Patron: {Patron}\n===================\n"
-            + $"Book: {Book}\n===================\n"
-            + $"ReservationDate: {ReservationDate:yyyy-MM-dd}\n"
-            + $"ExpiryDate: {ExpiryDate:yyyy-MM-dd}\n"
-            + $"Canceled: {Canceled}\n"
-            + $"CanceledDate: {CanceledDate?.ToString("yyyy-MM-dd")}";
+            + $"Patron: {_patron.Name}\n===================\n"
+            + $"Book: {_book.Title}\n===================\n"
+            + $"ReservationDate: {_reservationDate:yyyy-MM-dd}\n"
+            + $"ExpiryDate: {_expiryDate:yyyy-MM-dd}\n"
+            + $"Canceled: {_canceled}\n"
+            + $"CanceledDate: {(_canceledDate.HasValue ? _canceledDate.Value.ToString("yyyy-MM-dd") : "Not Canceled")}";
     }
 }
