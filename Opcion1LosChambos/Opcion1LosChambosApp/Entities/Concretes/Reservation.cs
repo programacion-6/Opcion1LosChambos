@@ -21,6 +21,17 @@ public class Reservation : IEntity
         _canceled = false;
     }
 
+    public Patron Patron
+    {
+        get => _patron;
+        set => _patron = value;
+    }
+
+    public Book Book
+    {
+        get => _book;
+        set => _book = value;
+    }
     public DateTime ReservationDate
     {
         get => _reservationDate;

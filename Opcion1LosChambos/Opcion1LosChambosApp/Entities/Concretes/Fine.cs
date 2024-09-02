@@ -18,6 +18,11 @@ public class Fine : IEntity
         _paid = false;
     }
 
+    public Patron Patron
+    {
+        get => _patron;
+        set => _patron = value;
+    }
     public double Amount
     {
         get => _amount;
