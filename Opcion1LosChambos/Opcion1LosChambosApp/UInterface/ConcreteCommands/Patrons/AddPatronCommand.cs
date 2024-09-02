@@ -25,6 +25,7 @@ public class AddPatronCommand : ICommand
 
         var patron = new Patron(name, membershipNumber, contactDetails);
         bool success = _library.PatronManager.Add(patron);
+        LocalData.SavePatronsToJson(_library.PatronManager.Items);
         UserInterface.ShowMessage(success ? "Patron added successfully." : "Failed to add patron.");
     }
 
