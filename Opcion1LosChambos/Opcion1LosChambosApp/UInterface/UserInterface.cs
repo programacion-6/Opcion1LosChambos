@@ -7,6 +7,7 @@ using LosChambos.UInterface.ConcreteCommands.UserInterfaces;
 using LosChambos.UInterface.Menu;
 using Spectre.Console;
 
+
 namespace LosChambos.UInterface;
 
 public class UserInterface
@@ -15,12 +16,16 @@ public class UserInterface
     private readonly PatronUInterface _patronUInterface;
     private readonly BorrowingTransactionUInterface _transactionUInterface;
 
+    private readonly LocalData _localData;
+
     private readonly MainMenuUInterface _mainMenuUInterface;
 
     public UserInterface()
     {
         var library = new Library();
-        LocalData.LoadData(library);
+        var bookStorage = new FileStorage<Book>("DataLoader/Books.json");
+        var patronStorage = new FileStorage<Patron>("DataLoader/Patrons.json");
+        _localData = new LocalData(patronStorage, bookStorage, library);
         _bookUInterface = new BookUInterface(library);
         _patronUInterface = new PatronUInterface(library);
         _transactionUInterface = new BorrowingTransactionUInterface(library);
@@ -74,15 +79,27 @@ public class UserInterface
     public static T DisplaySelectableListResult<T>(IEnumerable<T> choices)
         where T : notnull
     {
-        var selectedChoice = AnsiConsole.Prompt(
-            new SelectionPrompt<T>()
-                .Title("[yellow]Select an option[/]")
-                .PageSize(3)
-                .MoreChoicesText("[grey](Move up and down to reveal more options)[/]")
-                .AddChoices(choices)
-        );
+        const int pageSize = 3;
+        var items = choices.ToList();
+        int totalPages = ChoicesPaginator.CalculateTotalPages(items.Count, pageSize);
+        int currentPage = 0;
 
-        return selectedChoice;
+        while (true)
+        {
+            var pageItems = ChoicesPaginator.GetPageItems(items, currentPage, pageSize);
+            var options = ChoicesPaginator.BuildOptionsList(pageItems, currentPage, totalPages);
+
+            var selectedChoice = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title($"[yellow]Select an option (Page {currentPage + 1}/{totalPages})[/]")
+                    .PageSize(pageSize + 2)
+                    .AddChoices(options)
+            );
+
+            if (ChoicesPaginator.HandleSpecialChoices(selectedChoice, ref currentPage, totalPages))
+                continue;
+
+            return ChoicesPaginator.GetSelectedItem(items, selectedChoice);
     }
 
     public static string GetValidUserInput(Func<string, bool> validateFunc, string prompt, string errorMessage)
@@ -99,4 +116,6 @@ public class UserInterface
 
         return input;
     }
+}
+
 }

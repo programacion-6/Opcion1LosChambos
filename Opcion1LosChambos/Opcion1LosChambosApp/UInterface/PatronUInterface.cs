@@ -39,6 +39,7 @@ public class PatronUInterface : BaseUInterface<Patron>
             { "2", new DeletePatronCommand(_library) },
             { "3", new UpdatePatronCommand(_library) },
             { "4", new SearchMenuCommand(_searchInterface) },
+            { "5", new ListPatronsCommand(_library) },
         };
 
         var menuLabels = new List<string>
@@ -46,7 +47,8 @@ public class PatronUInterface : BaseUInterface<Patron>
             "Add Patron",
             "Delete Patron",
             "Update Patron",
-            "Search Patron"
+            "Search Patron",
+            "List all Patrons"
         };
 
         return new MainMenuUInterface(menuCommands, menuLabels, _menuTitle);

@@ -1,0 +1,82 @@
+[
+  {
+    "Id": "1794d77b-fc72-463f-b54e-677468fac8d1",
+    "Title": "To Kill a Mockingbird",
+    "Author": "Harper Lee",
+    "ISBN": "2001",
+    "Genre": "Fiction",
+    "PublicationYear": 1960
+  },
+  {
+    "Id": "e3f84b1d-5dd2-4987-8526-df1152ed762d",
+    "Title": "1984",
+    "Author": "George Orwell",
+    "ISBN": "2002",
+    "Genre": "Dystopian",
+    "PublicationYear": 1949
+  },
+  {
+    "Id": "936a825e-6508-4b73-9b53-f584214ecfb4",
+    "Title": "Moby Dick",
+    "Author": "Herman Melville",
+    "ISBN": "2003",
+    "Genre": "Adventure",
+    "PublicationYear": 1851
+  },
+  {
+    "Id": "513af8bd-e6c5-4e48-a8a5-71521d7fa792",
+    "Title": "Pride and Prejudice",
+    "Author": "Jane Austen",
+    "ISBN": "2004",
+    "Genre": "Romance",
+    "PublicationYear": 1813
+  },
+  {
+    "Id": "05c48b50-3769-4671-99e7-52c7bf82eb69",
+    "Title": "The Great Gatsby",
+    "Author": "F. Scott Fitzgerald",
+    "ISBN": "2005",
+    "Genre": "Fiction",
+    "PublicationYear": 1925
+  },
+  {
+    "Id": "783a477a-4afe-4ce7-99fa-c911d58b2547",
+    "Title": "War and Peace",
+    "Author": "Leo Tolstoy",
+    "ISBN": "2006",
+    "Genre": "Historical Fiction",
+    "PublicationYear": 1869
+  },
+  {
+    "Id": "ef5fceb5-16bd-4409-9e5b-8fa6734adb1d",
+    "Title": "The Catcher in the Rye",
+    "Author": "J.D. Salinger",
+    "ISBN": "2007",
+    "Genre": "Fiction",
+    "PublicationYear": 1951
+  },
+  {
+    "Id": "fd212138-3437-4894-bea2-3876ea01f928",
+    "Title": "The Hobbit",
+    "Author": "J.R.R. Tolkien",
+    "ISBN": "2008",
+    "Genre": "Fantasy",
+    "PublicationYear": 1937
+  },
+  {
+    "Id": "f09fa785-99f0-4546-a1e9-413d3930ed07",
+    "Title": "Crime and Punishment",
+    "Author": "Fyodor Dostoevsky",
+    "ISBN": "2009",
+    "Genre": "Psychological Fiction",
+    "PublicationYear": 1866
+  },
+  {
+    "Id": "d0e7fd66-011e-4746-bed0-26c01ab0a0d4",
+    "Title": "odyssey",
+    "Author": "homer",
+    "ISBN": "2010",
+    "Genre": "genre",
+    "PublicationYear": 1900
+  }
+]
