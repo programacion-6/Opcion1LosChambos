@@ -79,14 +79,28 @@ public class UserInterface
     public static T DisplaySelectableListResult<T>(IEnumerable<T> choices)
         where T : notnull
     {
-        var selectedChoice = AnsiConsole.Prompt(
-            new SelectionPrompt<T>()
-                .Title("[yellow]Select an option[/]")
-                .PageSize(3)
-                .MoreChoicesText("[grey](Move up and down to reveal more options)[/]")
-                .AddChoices(choices)
-        );
+        const int pageSize = 3;
+        var items = choices.ToList();
+        int totalPages = ChoicesPaginator.CalculateTotalPages(items.Count, pageSize);
+        int currentPage = 0;
 
-        return selectedChoice;
+        while (true)
+        {
+            var pageItems = ChoicesPaginator.GetPageItems(items, currentPage, pageSize);
+            var options = ChoicesPaginator.BuildOptionsList(pageItems, currentPage, totalPages);
+
+            var selectedChoice = AnsiConsole.Prompt(
+                new SelectionPrompt<string>()
+                    .Title($"[yellow]Select an option (Page {currentPage + 1}/{totalPages})[/]")
+                    .PageSize(pageSize + 2)
+                    .AddChoices(options)
+            );
+
+            if (ChoicesPaginator.HandleSpecialChoices(selectedChoice, ref currentPage, totalPages))
+                continue;
+
+            return ChoicesPaginator.GetSelectedItem(items, selectedChoice);
     }
+}
+
 }
