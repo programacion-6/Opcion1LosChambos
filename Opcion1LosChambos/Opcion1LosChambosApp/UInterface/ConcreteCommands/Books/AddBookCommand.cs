@@ -20,33 +20,29 @@ public class AddBookCommand : ICommand
 
     public void Execute()
     {
-        string title, author, isbn, genre;
-        int publicationYear;
-        
-        do
+        string title = UserInterface.GetUserInput("Enter book title: ");
+        string author = GetValidatedInput("Enter book author: ", _bookValidator.ValidateValue, "Author must contain only letters");
+        string isbn = UserInterface.GetUserInput("Enter book ISBN: ");
+        string genre = GetValidatedInput("Enter book genre: ", _bookValidator.ValidateValue, "Genre must contain only letters");
+        int publicationYear= TryParsePublicationYear();
+
+        var book = new Book(title, author, isbn, genre, publicationYear);
+        bool success = _library.BookManager.Add(book);
+        UserInterface.ShowMessage(success ? "Book added successfully." : "Failed to add book.");
+    }
+
+    private string GetValidatedInput(string prompt, Func<string, bool> validationFunc, string errorMessage)
+    {
+        string input;
+        while (true)
         {
-            title = UserInterface.GetUserInput("Enter book title: ");
-            author = UserInterface.GetUserInput("Enter book author: ");
-            isbn = UserInterface.GetUserInput("Enter book ISBN: ");
-            genre = UserInterface.GetUserInput("Enter book genre: ");
-            publicationYear = TryParsePublicationYear();
+            input = UserInterface.GetUserInput(prompt);
+            if (validationFunc(input))
+                break;
 
-            var book = new Book(title, author, isbn, genre, publicationYear);
-
-            try
-            {
-                _bookValidator.Validate(book);
-                bool success = _library.BookManager.Add(book);
-                LocalData.SaveBooksToJson(_library.BookManager.Items);
-                UserInterface.ShowMessage(success ? "Book added successfully." : "Failed to add book.");
-                break; 
-            }
-            catch (ValidationException ex)
-            {
-                UserInterface.ShowMessage(ex.Message);
-            }
-
-        } while (true); 
+            UserInterface.ShowMessage(errorMessage);
+        }
+        return input;
     }
 
 
