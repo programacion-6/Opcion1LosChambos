@@ -32,7 +32,7 @@ public class PatronValidator : Validator<Patron>
         }
     }
 
-    public static bool ValidateName(string name) => 
+    public bool ValidateName(string name) => 
         !string.IsNullOrEmpty(name) && name.All(char.IsLetter);
 
     public bool ValidateContactDetails(string contactDetails) => 

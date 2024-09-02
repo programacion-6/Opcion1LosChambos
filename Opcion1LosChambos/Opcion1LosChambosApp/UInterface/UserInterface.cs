@@ -100,22 +100,7 @@ public class UserInterface
                 continue;
 
             return ChoicesPaginator.GetSelectedItem(items, selectedChoice);
+        }
+
     }
-
-    public static string GetValidUserInput(Func<string, bool> validateFunc, string prompt, string errorMessage)
-    {
-        string input;
-        do
-        {
-            input = GetUserInput(prompt);
-            if (!validateFunc(input))
-            {
-                ShowMessage(errorMessage);
-            }
-        } while (!validateFunc(input));
-
-        return input;
-    }
-}
-
 }

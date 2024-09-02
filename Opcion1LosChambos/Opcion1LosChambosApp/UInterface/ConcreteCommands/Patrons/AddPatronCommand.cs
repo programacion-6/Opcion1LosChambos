@@ -9,63 +9,50 @@ namespace LosChambos.UInterface.ConcreteCommands.Patrons;
 public class AddPatronCommand : ICommand
 {
     private readonly Library _library;
+    private readonly PatronValidator _validator;
 
     public AddPatronCommand(Library library)
     {
         _library = library;
+        _validator = new PatronValidator();
     }
 
     public void Execute()
     {
-        var name = GetValidName();
-        var membershipNumber = TryParseMembershipNumber();
-        var contactDetails = GetValidContactDetails();
+        string name = GetValidatedInput("Enter patron name: ", _validator.ValidateName, "Name must contain only letters.");
+        int membershipNumber = GetValidatedNumber("Enter membership number: ", "Membership number must be a positive integer.");
+        string contactDetails = GetValidatedInput("Enter contact details: ", _validator.ValidateContactDetails, "Contact details must be a valid email address.");
 
         var patron = new Patron(name, membershipNumber, contactDetails);
-
         bool success = _library.PatronManager.Add(patron);
-        LocalData.SavePatronsToJson(_library.PatronManager.Items);
         UserInterface.ShowMessage(success ? "Patron added successfully." : "Failed to add patron.");
     }
 
-    private static int TryParseMembershipNumber()
+    private string GetValidatedInput(string prompt, Func<string, bool> validationFunc, string errorMessage)
     {
-        if(int.TryParse(UserInterface.GetUserInput("Enter membership number: "), out int inputParsed))
+        string input;
+        while (true)
         {
-            return inputParsed;
+            input = UserInterface.GetUserInput(prompt);
+            if (validationFunc(input))
+                break;
+
+            UserInterface.ShowMessage(errorMessage);
         }
-        else
-        {
-            UserInterface.ShowMessage("Enter a correct value.");
-            return TryParseMembershipNumber();
-        }
+        return input;
     }
 
-    private static string GetValidName()
+    private int GetValidatedNumber(string prompt, string errorMessage)
     {
-        var name = UserInterface.GetUserInput("Enter patron name: ");
-        if (!string.IsNullOrWhiteSpace(name))
+        int number;
+        while (true)
         {
-            return name;
-        }
-        else
-        {
-            UserInterface.ShowMessage("Name cannot be empty.");
-            return GetValidName();
-        }
-    }
+            string input = UserInterface.GetUserInput(prompt);
+            if (int.TryParse(input, out number) && number > 0)
+                break;
 
-    private static string GetValidContactDetails()
-    {
-        var contactDetails = UserInterface.GetUserInput("Enter contact details: ");
-        if (!string.IsNullOrWhiteSpace(contactDetails))
-        {
-            return contactDetails;
+            UserInterface.ShowMessage(errorMessage);
         }
-        else
-        {
-            UserInterface.ShowMessage("Contact details cannot be empty.");
-            return GetValidContactDetails();
-        }
+        return number;
     }
 }
