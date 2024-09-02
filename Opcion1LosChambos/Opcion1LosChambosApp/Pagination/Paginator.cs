@@ -6,7 +6,7 @@ public class Paginator<T>
     private readonly List<T> _items;
     private readonly int _pageSize;
 
-    public Paginator(List<T> items, int pageSize = 5)
+    public Paginator(List<T> items, int pageSize = 3)
     {
         _items = items ?? throw new ArgumentNullException(nameof(items));
         _pageSize = pageSize > 0 ? pageSize : throw new ArgumentOutOfRangeException(nameof(pageSize));
