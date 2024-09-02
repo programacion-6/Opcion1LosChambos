@@ -70,8 +70,8 @@ public class Reservation : IEntity
     public override string ToString()
     {
         return $"Reservation:\n"
-            + $"Patron: {_patron.Name}\n===================\n"
-            + $"Book: {_book.Title}\n===================\n"
+            + $"Patron: {Patron.Name}\n===================\n"
+            + $"Book: {Book.Title}\n===================\n"
             + $"ReservationDate: {_reservationDate:yyyy-MM-dd}\n"
             + $"ExpiryDate: {_expiryDate:yyyy-MM-dd}\n"
             + $"Canceled: {_canceled}\n"

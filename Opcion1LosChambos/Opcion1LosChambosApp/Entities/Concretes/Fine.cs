@@ -56,7 +56,7 @@ public class Fine : IEntity
     public override string ToString()
     {
         return $"Fine:\n"
-            + $"Patron: \t {_patron.Name}\n===================\n"
+            + $"Patron: \t {Patron.Name}\n===================\n"
             + $"Amount: {Amount}\n"
             + $"DueDate: {DueDate:yyyy-MM-dd}\n"
             + $"PaidDate: {(PaidDate.HasValue ? PaidDate.Value.ToString("yyyy-MM-dd") : "Not Paid")}\n"
