@@ -34,11 +34,11 @@ __Docs__
 ---
 ## Tasks to be worked on 
 ### Jhael Arce
-- [Documentation of Design Patterns in GitHub Wiki](https://trello.com/c/t1aW6oEr) | __Status__ "IN PROGRESS"
 - [Improve Validation for Adding Patrons](https://trello.com/c/wdvXhZTN) | __Status__ "TO WORK"
 - [Encapsulation of Attributes in Models](https://trello.com/c/ko0HhXVf) | __Status__ "TO WORK"
-- [Validation for Due Date Within the Same Month When Borrowing a Book](https://trello.com/c/wBnRWVnZ) | __Status__ "TO WORK"
 - [Validation for Positive Membership Number when Adding a Patron](https://trello.com/c/HX7MTgz2) | __Status__ "TO WORK"
+- [Documentation of Design Patterns in GitHub Wiki](https://trello.com/c/t1aW6oEr) | __Status__ "TO WORK"
+
 
 ### Sebastian Barra
 - [Visual bug when returning a book and sensitive data is displayed](https://trello.com/c/Zvz54NUC) | __Status__ "IN PROGRESS"

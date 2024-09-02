@@ -100,7 +100,7 @@ public class UserInterface
                 continue;
 
             return ChoicesPaginator.GetSelectedItem(items, selectedChoice);
-    }
-}
+        }
 
+    }
 }
