@@ -35,13 +35,20 @@ public class BorrowingTransaction : IEntity
 
     public override string ToString()
     {
-        return $"Borrowing Transaction:"
-            + $"Book: \t {Book}\n===================\n"
-            + $"Patron: \t {Patron}\n===================\n"
+        return $"Borrowing Transaction:\n"
+            + $"Book: \t {Book.Title}\n"
+            + $"Author: {Book.Author}\n"
+            + $"ISBN: {Book.ISBN}\n"
+            + $"Genre: {Book.Genre}\n"
+            + $"Publication Year: {Book.PublicationYear}\n"
+            + $"===================\n"
+            + $"Patron: \t {Patron.Name}\n"
+            + $"Membership Number: {Patron.MembershipNumber}\n"
+            + $"Contact Details: {Patron.ContactDetails}\n"
+            + $"===================\n"
             + $"Borrowed Date: {BorrowedDate:yyyy-MM-dd}\n"
-            + $"Due Date: {DueDate}\n"
-            + $"Returned Date: {ReturnedDate:yyyy-MM-dd}\n"
-            + $"Returned: {Returned}\n"
-            + $"Fine: {(Fine != null ? Fine + "\n===================" : "None")}\n";
+            + $"Due Date: {DueDate:yyyy-MM-dd}\n"
+            + $"Returned Date: {(ReturnedDate.HasValue ? ReturnedDate.Value.ToString("yyyy-MM-dd") : "Not Returned")}\n"
+            + $"Fine: {(Fine != null ? Fine.ToString() + "\n===================" : "None")}\n";
     }
 }
