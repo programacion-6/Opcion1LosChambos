@@ -34,23 +34,23 @@ __Docs__
 ---
 ## Tasks to be worked on 
 ### Jhael Arce
-- [Improve Validation for Adding Patrons](https://trello.com/c/wdvXhZTN) | __Status__ "TO WORK"
-- [Encapsulation of Attributes in Models](https://trello.com/c/ko0HhXVf) | __Status__ "TO WORK"
-- [Validation for Positive Membership Number when Adding a Patron](https://trello.com/c/HX7MTgz2) | __Status__ "TO WORK"
-- [Documentation of Design Patterns in GitHub Wiki](https://trello.com/c/t1aW6oEr) | __Status__ "TO WORK"
+- [Improve Validation for Adding Patrons](https://trello.com/c/wdvXhZTN) | __Status__ "DONE"
+- [Encapsulation of Attributes in Models](https://trello.com/c/ko0HhXVf) | __Status__ "DONE"
+- [Validation for Positive Membership Number when Adding a Patron](https://trello.com/c/HX7MTgz2) | __Status__ "DONE"
+- [Documentation of Design Patterns in GitHub Wiki](https://trello.com/c/t1aW6oEr) | __Status__ "DONE"
 
 
 ### Sebastian Barra
-- [Visual bug when returning a book and sensitive data is displayed](https://trello.com/c/Zvz54NUC) | __Status__ "IN PROGRESS"
-- [Bug/It is not possible to borrow a returned book.](https://trello.com/c/q14IPKqa) | __Status__ "TO WORK"
-- [Improve Inputs validations when adding a book](https://trello.com/c/ns74ye7w) | __Status__ "TO WORK"
+- [Visual bug when returning a book and sensitive data is displayed](https://trello.com/c/Zvz54NUC) | __Status__ "DONE"
+- [Bug/It is not possible to borrow a returned book.](https://trello.com/c/q14IPKqa) | __Status__ "DONE"
+- [Improve Inputs validations when adding a book](https://trello.com/c/ns74ye7w) | __Status__ "DONE"
 
 ### Diego Centella
-- [input data by default on classes](https://trello.com/c/iaGh2wSi) | __Status__ "IN PROGRESS"
-- [improve updating of return book list](https://trello.com/c/rTvIN84S) | __Status__ "TO WORK"
+- [input data by default on classes](https://trello.com/c/iaGh2wSi) | __Status__ "DONE"
+- [improve updating of return book list](https://trello.com/c/rTvIN84S) | __Status__ "DONE"
 
 ### Emanuel Galindo 
 - [UML Update](https://trello.com/c/WTKpGoBK) | __Status__ "DONE"
-- [Put exit buttons to manage options](https://trello.com/c/RPgKBSTh) | __Status__ "TO WORK"
-- [Add pagination to manager options](https://trello.com/c/DFc1QVY4) | __Status__ "TO WORK"
-- [General listing](https://trello.com/c/Vr7wPMbZ) | __Status__ "TO WORK"
+- [Put exit buttons to manage options](https://trello.com/c/RPgKBSTh) | __Status__ "DONE"
+- [Add pagination to manager options](https://trello.com/c/DFc1QVY4) | __Status__ "DONE"
+- [General listing](https://trello.com/c/Vr7wPMbZ) | __Status__ "DONE"
