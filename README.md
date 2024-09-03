@@ -42,7 +42,7 @@ __Docs__
 
 ### Sebastian Barra
 - [Visual bug when returning a book and sensitive data is displayed](https://trello.com/c/Zvz54NUC) | __Status__ "DONE"
-- [Bug/It is not possible to borrow a returned book.](https://trello.com/c/q14IPKqa) | __Status__ "DONE"
+- [Bug/It is not possible to borrow a book.](https://trello.com/c/q14IPKqa) | __Status__ "DONE"
 - [Improve Inputs validations when adding a book](https://trello.com/c/ns74ye7w) | __Status__ "DONE"
 
 ### Diego Centella
