@@ -9,7 +9,7 @@ public class PatronValidator : Validator<Patron>
    protected override void InitializeValidations()
     {
         Validations.Add("Name is required.",
-            patron => !string.IsNullOrEmpty(patron.Name) && patron.Name.All(char.IsLetter));
+            patron => !string.IsNullOrEmpty(patron.Name) && patron.Name.Any(char.IsLetter));
 
         Validations.Add("MembershipNumber is required.",
             patron => patron.MembershipNumber > 0);
@@ -33,7 +33,7 @@ public class PatronValidator : Validator<Patron>
     }
 
     public bool ValidateName(string name) => 
-        !string.IsNullOrEmpty(name) && name.All(char.IsLetter);
+        !string.IsNullOrEmpty(name) && name.Any(char.IsLetter);
 
     public bool ValidateContactDetails(string contactDetails) => 
         !string.IsNullOrEmpty(contactDetails) && IsValidEmail(contactDetails);
